@@ -1,0 +1,70 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#authentication
+docs: https://github.com/DispatchMe/v3-api-docs
+summary:
+  types: [oauth2, http]
+  http_schemes: [bearer]
+  oauth2_flows: [clientCredentials, password, refreshToken]
+  api_key_in: []
+  scopes_documented: false
+  notes: >-
+    Dispatch secures its API with OAuth 2.0 bearer tokens. Two credential models exist:
+    job sources (warranty companies, manufacturers, lead-gen platforms) authenticate with
+    the client_credentials grant using a public/secret key pair, which grants access to
+    objects assigned to all service providers in their network; an individual service
+    provider authenticates with the resource-owner password grant. Dispatch publishes no
+    OAuth scope vocabulary - authorization is governed by an account-level ACL negotiated
+    with an account manager, so scopes/ is intentionally absent for this provider.
+schemes:
+  - name: bearerAuth
+    type: http
+    scheme: bearer
+    description: >-
+      OAuth 2.0 bearer token supplied in the Authorization header. Tokens are temporary;
+      integrations must handle 401 and re-authenticate.
+    sources: [openapi/dispatch-rest-v3-openapi.yml, openapi/dispatch-files-v1-openapi.yml]
+  - name: oauth2
+    type: oauth2
+    token_url: https://api.dispatch.me/v3/oauth/token
+    refresh_url: https://api.dispatch.me/v3/oauth/token
+    sandbox_token_url: https://api-sandbox.dispatch.me/v3/oauth/token
+    scope_count: 0
+    flows:
+      - flow: clientCredentials
+        audience: job sources / networks
+        parameters: [grant_type, client_id, client_secret]
+        description: >-
+          Authenticate as a job source. client_id is the account public key and
+          client_secret the secret key, both issued by Dispatch on signup.
+      - flow: password
+        audience: individual service providers
+        parameters: [grant_type, username, password, client_id, client_secret]
+        description: >-
+          Authenticate a single service provider. Dispatch recommends creating a separate
+          user account with the "dispatcher" role for the integration so integration
+          actions are distinguishable from real user actions.
+      - flow: refreshToken
+        parameters: [grant_type, refresh_token]
+        description: Exchange the refresh token issued alongside the access token for a new access token.
+    token_response:
+      fields: [access_token, token_type, created_at, expires_in, refresh_token]
+      token_type: bearer
+    sources: [openapi/dispatch-rest-v3-openapi.yml]
+access_control:
+  model: account-level ACL
+  description: >-
+    A job source has full access to the transactional data it sends to Dispatch (the job
+    and all child objects). Access to organizations, their customers and their dispatchers
+    and technicians depends on the relationship: a first-party network grants broader
+    access than a third-party network where the organization already receives work from
+    other sources. A user authenticated as a single service provider has access to all
+    objects within their own organization.
+  roles: [dispatcher, technician]
+credential_issuance:
+  self_service: false
+  description: Credentials are issued by a Dispatch account manager on signup; there is no self-service key portal.
+related:
+  - conventions/dispatch-conventions.yml
+  - errors/dispatch-problem-types.yml
+  - sandbox/dispatch-sandbox.yml
