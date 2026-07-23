@@ -1,0 +1,289 @@
+openapi: 3.1.0
+info:
+  title: Dispatch Files API v1 Appointments API
+  version: '1'
+  summary: Upload and retrieve photos and other files shared with service providers and customers.
+  description: The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.
+  contact:
+    name: Dispatch
+    url: https://dispatch.me/contact
+    email: sales@dispatch.me
+servers:
+- url: https://files-api.dispatch.me
+  description: Production
+- url: https://files-api-sandbox.dispatch.me
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Appointments
+  description: Scheduled times at which an assigned technician performs work for a job.
+paths:
+  /v3/appointments:
+    post:
+      operationId: createAppointment
+      tags:
+      - Appointments
+      summary: Create an appointment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appointment:
+                  $ref: '#/components/schemas/Appointment'
+      responses:
+        '201':
+          description: Appointment created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appointment:
+                    $ref: '#/components/schemas/Appointment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      operationId: listAppointments
+      tags:
+      - Appointments
+      summary: List appointments
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - name: filter[job_id_eq]
+        in: query
+        description: Parent job ID
+        schema:
+          type: integer
+      - name: filter[job_id_in]
+        in: query
+        description: Parent job IDs (comma separated)
+        schema:
+          type: string
+      - name: filter[organization_id_eq]
+        in: query
+        description: Parent organization ID
+        schema:
+          type: integer
+      - name: filter[status_eq]
+        in: query
+        description: Appointments in a specific status
+        schema:
+          $ref: '#/components/schemas/AppointmentStatus'
+      - name: filter[status_in]
+        in: query
+        description: Specific statuses (comma separated)
+        schema:
+          type: string
+      - name: filter[time_gt]
+        in: query
+        description: Appointments scheduled after the given ISO8601 time
+        schema:
+          type: string
+          format: date-time
+      - name: filter[time_gteq]
+        in: query
+        description: Appointments scheduled on or after the given ISO8601 time
+        schema:
+          type: string
+          format: date-time
+      - name: filter[time_lt]
+        in: query
+        description: Appointments scheduled before the given ISO8601 time
+        schema:
+          type: string
+          format: date-time
+      - name: filter[time_lteq]
+        in: query
+        description: Appointments scheduled on or before the given ISO8601 time
+        schema:
+          type: string
+          format: date-time
+      - name: filter[user_id_eq]
+        in: query
+        description: Appointments assigned to a particular technician
+        schema:
+          type: integer
+      - name: filter[user_id_in]
+        in: query
+        description: Appointments assigned to technicians (comma separated)
+        schema:
+          type: string
+      - name: filter[user_id_null]
+        in: query
+        description: Show unassigned appointments (value should be true)
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: A list of appointments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appointments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Appointment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /v3/appointments/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    get:
+      operationId: getAppointment
+      tags:
+      - Appointments
+      summary: View a single appointment
+      responses:
+        '200':
+          description: The appointment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appointment:
+                    $ref: '#/components/schemas/Appointment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateAppointment
+      tags:
+      - Appointments
+      summary: Update an appointment
+      description: Scheduling an appointment also moves its parent job to the "scheduled" status. Canceling a job cancels all of its child appointments.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appointment:
+                  $ref: '#/components/schemas/Appointment'
+      responses:
+        '200':
+          description: The updated appointment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appointment:
+                    $ref: '#/components/schemas/Appointment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: deleteAppointment
+      tags:
+      - Appointments
+      summary: Delete an appointment
+      responses:
+        '204':
+          description: Appointment deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of records to return. Maximum value is 100.
+      schema:
+        type: integer
+        maximum: 100
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+    InternalServerError:
+      description: Internal Server Error - Dispatch had a problem. Try again later.
+  schemas:
+    AppointmentStatus:
+      type: string
+      description: Appointments move freely between statuses. Technicians update status from the mobile app.
+      enum:
+      - draft
+      - scheduled
+      - enroute
+      - started
+      - complete
+      - canceled
+    Appointment:
+      type: object
+      required:
+      - job_id
+      - status
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        job_id:
+          type: integer
+          description: ID of the parent job
+        time:
+          type: string
+          format: date-time
+          description: ISO8601 scheduled time
+        duration:
+          type: integer
+          description: Duration in seconds. Defaults to 7200 (2 hours).
+        user_id:
+          type: integer
+          description: ID of the assigned technician
+        status:
+          $ref: '#/components/schemas/AppointmentStatus'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token obtained from the core API at POST /v3/oauth/token.
+x-apievangelist:
+  generated: '2026-07-20'
+  method: generated
+  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+  note: Generated from the "Files and Photos" section of Dispatch's public REST API v3 documentation. The Files API is served from a different host than the core API.

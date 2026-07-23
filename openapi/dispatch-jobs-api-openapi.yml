@@ -1,0 +1,584 @@
+openapi: 3.1.0
+info:
+  title: Dispatch Files API v1 Appointments Jobs API
+  version: '1'
+  summary: Upload and retrieve photos and other files shared with service providers and customers.
+  description: The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.
+  contact:
+    name: Dispatch
+    url: https://dispatch.me/contact
+    email: sales@dispatch.me
+servers:
+- url: https://files-api.dispatch.me
+  description: Production
+- url: https://files-api-sandbox.dispatch.me
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Jobs
+  description: A single body of work for a customer, assigned to an organization.
+paths:
+  /v3/jobs:
+    post:
+      operationId: createJob
+      tags:
+      - Jobs
+      summary: Create a job
+      description: Create a job for an existing customer and organization. Contacts, equipment descriptions and marketing attributions may be supplied inline.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                job:
+                  $ref: '#/components/schemas/Job'
+      responses:
+        '201':
+          description: Job created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job:
+                    $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    get:
+      operationId: listJobs
+      tags:
+      - Jobs
+      summary: List jobs
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - name: filter[brand_id_eq]
+        in: query
+        description: Jobs in a certain brand
+        schema:
+          type: integer
+      - name: filter[source_id_eq]
+        in: query
+        description: Jobs in a certain source
+        schema:
+          type: integer
+      - name: filter[customer_id_eq]
+        in: query
+        description: Jobs for a certain customer
+        schema:
+          type: integer
+      - name: filter[customer_id_in]
+        in: query
+        description: Jobs for a group of customers (comma separated)
+        schema:
+          type: string
+      - name: filter[external_ids_contains]
+        in: query
+        description: Jobs with a certain external ID
+        schema:
+          type: string
+      - name: filter[organization_id_eq]
+        in: query
+        description: Jobs assigned to a certain organization
+        schema:
+          type: integer
+      - name: filter[organization_id_in]
+        in: query
+        description: Jobs assigned to a group of organizations (comma separated)
+        schema:
+          type: string
+      - name: filter[status_eq]
+        in: query
+        description: Jobs in a certain status
+        schema:
+          $ref: '#/components/schemas/JobStatus'
+      - name: filter[status_in]
+        in: query
+        description: Jobs in a group of statuses (comma separated)
+        schema:
+          type: string
+      - name: filter[status_not_eq]
+        in: query
+        description: Jobs that are not in a certain status
+        schema:
+          $ref: '#/components/schemas/JobStatus'
+      responses:
+        '200':
+          description: A list of jobs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v3/jobs/factory:
+    post:
+      operationId: createJobWithRelatedRecords
+      tags:
+      - Jobs
+      summary: Create a job with related records
+      description: Create a job together with its customer, organization and appointment records in a single call.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                job:
+                  $ref: '#/components/schemas/Job'
+                customer:
+                  $ref: '#/components/schemas/Customer'
+                organization:
+                  $ref: '#/components/schemas/Organization'
+      responses:
+        '201':
+          description: Job and related records created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job:
+                    $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /v3/jobs/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    get:
+      operationId: getJob
+      tags:
+      - Jobs
+      summary: Get a job
+      parameters:
+      - name: include
+        in: query
+        description: Side-load related collections, e.g. marketing_attributions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The job
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job:
+                    $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateJob
+      tags:
+      - Jobs
+      summary: Update a job
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                job:
+                  $ref: '#/components/schemas/Job'
+      responses:
+        '200':
+          description: The updated job
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job:
+                    $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /v3/jobs/{job_id}/time_windows:
+    parameters:
+    - name: job_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    post:
+      operationId: createJobTimeWindow
+      tags:
+      - Jobs
+      summary: Add customer-suggested times to a job
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                time_windows:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/AppointmentWindow'
+      responses:
+        '201':
+          description: Time windows added
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /v3/jobs/{id}/contacts:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    get:
+      operationId: listJobContacts
+      tags:
+      - Jobs
+      summary: List the contacts on a job
+      responses:
+        '200':
+          description: A list of contacts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contacts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateJobContacts
+      tags:
+      - Jobs
+      summary: Update the contacts on a job
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contacts:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Contact'
+      responses:
+        '200':
+          description: The updated contacts
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /v3/jobs/{id}/contacts/{contact_id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - name: contact_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    patch:
+      operationId: updateJobContact
+      tags:
+      - Jobs
+      summary: Update a single contact on a job
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact:
+                  $ref: '#/components/schemas/Contact'
+      responses:
+        '200':
+          description: The updated contact
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+components:
+  schemas:
+    ContactMethod:
+      type: object
+      properties:
+        label:
+          type: string
+          description: 'For example: mobile, work'
+        value:
+          type: string
+        preferred:
+          type: boolean
+    Customer:
+      type: object
+      required:
+      - organization_id
+      - first_name
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        organization_id:
+          type: integer
+          description: ID of the parent organization
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company_name:
+          type: string
+        notes:
+          type: string
+        email:
+          type: string
+          format: email
+          description: Single email address per customer. Used for email notifications when configured.
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+        home_address:
+          $ref: '#/components/schemas/Location'
+        billing_address:
+          $ref: '#/components/schemas/Location'
+        external_ids:
+          type: array
+          items:
+            type: string
+          description: Your ID(s) for this customer. Available to job sources only.
+    Job:
+      type: object
+      required:
+      - title
+      - customer_id
+      - organization_id
+      - address
+      - status
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+        description:
+          type: string
+          description: Additional details. Markdown is supported.
+        service_type:
+          type: string
+          description: Type of service, e.g. plumbing
+        customer_id:
+          type: integer
+        organization_id:
+          type: integer
+        external_ids:
+          type: array
+          items:
+            type: string
+        address:
+          $ref: '#/components/schemas/Location'
+        brand_id:
+          type: integer
+        source_id:
+          type:
+          - integer
+          - 'null'
+          description: Null when the job is a retail job created by the organization.
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+        equipment_descriptions:
+          type: array
+          items:
+            type: object
+        marketing_attributions:
+          type: array
+          items:
+            type: object
+        service_fee:
+          type: number
+          description: Fee the customer owes the warranty company or other source of work.
+        service_fee_precollected:
+          type: boolean
+          description: Whether the customer fee was collected before the job was scheduled.
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        status_message:
+          type: string
+          description: Optional qualifier for the current status
+    Location:
+      type: object
+      description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
+      required:
+      - street_1
+      - city
+      properties:
+        street_1:
+          type: string
+        street_2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+          description: Two-character state/province abbreviation
+        postal_code:
+          type: string
+          description: 5-digit US or 6-character Canadian postal code
+        timezone:
+          type: string
+          description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company_name:
+          type: string
+        external_id:
+          type: string
+        primary:
+          type: boolean
+        notes:
+          type: string
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        email_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        billing_address:
+          $ref: '#/components/schemas/Location'
+    AppointmentWindow:
+      type: object
+      properties:
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+    JobStatus:
+      type: string
+      description: Jobs move freely between statuses.
+      enum:
+      - unscheduled
+      - scheduled
+      - paused
+      - complete
+      - canceled
+    Organization:
+      type: object
+      required:
+      - name
+      - email
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        external_ids:
+          type: array
+          items:
+            type: string
+        address:
+          $ref: '#/components/schemas/Location'
+        phone_number:
+          type: string
+          description: RFC 3966 format
+        email:
+          type: string
+          format: email
+        logo_token:
+          type: string
+          description: Token for the organization logo in the Dispatch file system
+    PhoneNumber:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Phone number in RFC 3966 format
+        primary:
+          type: boolean
+          description: Set true for the number that receives SMS notifications
+        type:
+          type: string
+          description: 'For example: Mobile, Work'
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of records to return. Maximum value is 100.
+      schema:
+        type: integer
+        maximum: 100
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token obtained from the core API at POST /v3/oauth/token.
+x-apievangelist:
+  generated: '2026-07-20'
+  method: generated
+  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+  note: Generated from the "Files and Photos" section of Dispatch's public REST API v3 documentation. The Files API is served from a different host than the core API.

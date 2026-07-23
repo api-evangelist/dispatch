@@ -1,0 +1,247 @@
+openapi: 3.1.0
+info:
+  title: Dispatch Files API v1 Appointments Work Orders API
+  version: '1'
+  summary: Upload and retrieve photos and other files shared with service providers and customers.
+  description: The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.
+  contact:
+    name: Dispatch
+    url: https://dispatch.me/contact
+    email: sales@dispatch.me
+servers:
+- url: https://files-api.dispatch.me
+  description: Production
+- url: https://files-api-sandbox.dispatch.me
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Work Orders
+  description: Composite object creating jobs, customers, organizations and appointments in one call.
+paths:
+  /v3/work_orders:
+    post:
+      operationId: createWorkOrder
+      tags:
+      - Work Orders
+      summary: Create a work order
+      description: The recommended entry point. A work order carries all the information needed to create the job, customer, organization and appointment windows in one call, and selects an orchestration algorithm for offering or assigning the work.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+      responses:
+        '201':
+          description: Work order created
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /v3/work_orders/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    patch:
+      operationId: updateWorkOrder
+      tags:
+      - Work Orders
+      summary: Update a work order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+      responses:
+        '200':
+          description: The updated work order
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /v3/work_orders/{id}/cancel:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    post:
+      operationId: cancelWorkOrder
+      tags:
+      - Work Orders
+      summary: Cancel a work order
+      description: Canceling cancels the job and the status of all child appointments.
+      responses:
+        '200':
+          description: Work order canceled
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    ContactMethod:
+      type: object
+      properties:
+        label:
+          type: string
+          description: 'For example: mobile, work'
+        value:
+          type: string
+        preferred:
+          type: boolean
+    Location:
+      type: object
+      description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
+      required:
+      - street_1
+      - city
+      properties:
+        street_1:
+          type: string
+        street_2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+          description: Two-character state/province abbreviation
+        postal_code:
+          type: string
+          description: 5-digit US or 6-character Canadian postal code
+        timezone:
+          type: string
+          description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
+    Organization:
+      type: object
+      required:
+      - name
+      - email
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        external_ids:
+          type: array
+          items:
+            type: string
+        address:
+          $ref: '#/components/schemas/Location'
+        phone_number:
+          type: string
+          description: RFC 3966 format
+        email:
+          type: string
+          format: email
+        logo_token:
+          type: string
+          description: Token for the organization logo in the Dispatch file system
+    AppointmentWindow:
+      type: object
+      properties:
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+    WorkOrder:
+      type: object
+      description: The recommended integration surface - carries everything needed to create a job, its customer, its organization and appointment windows in one request.
+      required:
+      - title
+      - location
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+          description: Markdown is supported
+        service_type:
+          type: string
+        brand_id:
+          type: integer
+        orchestration:
+          $ref: '#/components/schemas/OrchestrationAlgorithm'
+        external_id:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+        appointment_windows:
+          type: array
+          description: Optional windows for the organization to choose from.
+          items:
+            $ref: '#/components/schemas/AppointmentWindow'
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+        organizations:
+          type: array
+          description: Organizations to send or offer the work to. In direct_* orchestration only a single organization is permitted.
+          items:
+            $ref: '#/components/schemas/Organization'
+    OrchestrationAlgorithm:
+      type: string
+      description: direct_offer offers the job to a single organization (job starts in offered status); direct_assign assigns the job to a single organization (job starts in unscheduled status).
+      enum:
+      - direct_offer
+      - direct_assign
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company_name:
+          type: string
+        external_id:
+          type: string
+        primary:
+          type: boolean
+        notes:
+          type: string
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        email_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        billing_address:
+          $ref: '#/components/schemas/Location'
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token obtained from the core API at POST /v3/oauth/token.
+x-apievangelist:
+  generated: '2026-07-20'
+  method: generated
+  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+  note: Generated from the "Files and Photos" section of Dispatch's public REST API v3 documentation. The Files API is served from a different host than the core API.

@@ -1,0 +1,111 @@
+openapi: 3.1.0
+info:
+  title: Dispatch API v1 Appointments Files API
+  version: '1'
+  summary: Upload and retrieve photos and other files shared with service providers and customers.
+  description: The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.
+  contact:
+    name: Dispatch
+    url: https://dispatch.me/contact
+    email: sales@dispatch.me
+servers:
+- url: https://files-api.dispatch.me
+  description: Production
+- url: https://files-api-sandbox.dispatch.me
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Files
+  description: Files and photos associated with a job.
+paths:
+  /v1/datafiles:
+    post:
+      operationId: uploadDatafile
+      tags:
+      - Files
+      summary: Upload a file
+      description: Upload a photo or other file using Content-Type multipart/form-data with a `file` part. Returns the datafile record including the UID used to retrieve it.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: The created datafile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  datafile:
+                    $ref: '#/components/schemas/Datafile'
+        '401':
+          description: Unauthorized - your OAuth2 bearer token is incorrect.
+        '422':
+          description: Unprocessable Entity - the upload did not pass validation.
+  /v1/datafiles/{uid}:
+    parameters:
+    - name: uid
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    get:
+      operationId: getDatafile
+      tags:
+      - Files
+      summary: View a file by UID
+      description: Responds with a 302 redirect to the stored object.
+      responses:
+        '302':
+          description: Redirect to the stored file
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+        '401':
+          description: Unauthorized - your OAuth2 bearer token is incorrect.
+        '404':
+          description: Not Found - requested file could not be found.
+components:
+  schemas:
+    Datafile:
+      type: object
+      properties:
+        uid:
+          type: string
+          format: uuid
+        filename:
+          type: string
+        mime_type:
+          type: string
+        name:
+          type: string
+        bucket_id:
+          type:
+          - string
+          - 'null'
+        created_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token obtained from the core API at POST /v3/oauth/token.
+x-apievangelist:
+  generated: '2026-07-20'
+  method: generated
+  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+  note: Generated from the "Files and Photos" section of Dispatch's public REST API v3 documentation. The Files API is served from a different host than the core API.

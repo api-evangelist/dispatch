@@ -1,0 +1,145 @@
+openapi: 3.1.0
+info:
+  title: Dispatch Files API v1 Appointments Authentication API
+  version: '1'
+  summary: Upload and retrieve photos and other files shared with service providers and customers.
+  description: The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.
+  contact:
+    name: Dispatch
+    url: https://dispatch.me/contact
+    email: sales@dispatch.me
+servers:
+- url: https://files-api.dispatch.me
+  description: Production
+- url: https://files-api-sandbox.dispatch.me
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Authentication
+  description: OAuth 2.0 token issuance and refresh.
+paths:
+  /v3/oauth/token:
+    post:
+      operationId: createToken
+      tags:
+      - Authentication
+      summary: Retrieve or refresh a bearer token
+      description: Exchange credentials for an OAuth 2.0 bearer token. Job sources use the client_credentials grant; a single service provider uses the password grant. Tokens are temporary - handle 401 responses by retrieving a new token.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/ClientCredentialsGrant'
+              - $ref: '#/components/schemas/PasswordGrant'
+              - $ref: '#/components/schemas/RefreshTokenGrant'
+      responses:
+        '200':
+          description: Token issued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+components:
+  responses:
+    ServiceUnavailable:
+      description: Service Unavailable - temporarily offline for maintenance. Try again later.
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    BadRequest:
+      description: Bad Request - your request is malformed or otherwise invalid.
+    TooManyRequests:
+      description: Too Many Requests - you have exceeded your rate limit.
+    InternalServerError:
+      description: Internal Server Error - Dispatch had a problem. Try again later.
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          examples:
+          - bearer
+        created_at:
+          type: integer
+          description: Unix timestamp
+        expires_in:
+          type: integer
+          description: Lifetime in seconds
+        refresh_token:
+          type: string
+    ClientCredentialsGrant:
+      type: object
+      description: Job-source authentication.
+      required:
+      - grant_type
+      - client_id
+      - client_secret
+      properties:
+        grant_type:
+          type: string
+          const: client_credentials
+        client_id:
+          type: string
+          description: Your public key
+        client_secret:
+          type: string
+          description: Your secret key
+    PasswordGrant:
+      type: object
+      description: Single service provider (user) authentication.
+      required:
+      - grant_type
+      - username
+      - password
+      - client_id
+      - client_secret
+      properties:
+        grant_type:
+          type: string
+          const: password
+        username:
+          type: string
+          format: email
+        password:
+          type: string
+        client_id:
+          type: string
+        client_secret:
+          type: string
+    RefreshTokenGrant:
+      type: object
+      required:
+      - grant_type
+      - refresh_token
+      properties:
+        grant_type:
+          type: string
+          const: refresh_token
+        refresh_token:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token obtained from the core API at POST /v3/oauth/token.
+x-apievangelist:
+  generated: '2026-07-20'
+  method: generated
+  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+  note: Generated from the "Files and Photos" section of Dispatch's public REST API v3 documentation. The Files API is served from a different host than the core API.

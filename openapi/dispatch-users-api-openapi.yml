@@ -1,0 +1,267 @@
+openapi: 3.1.0
+info:
+  title: Dispatch Files API v1 Appointments Users API
+  version: '1'
+  summary: Upload and retrieve photos and other files shared with service providers and customers.
+  description: The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.
+  contact:
+    name: Dispatch
+    url: https://dispatch.me/contact
+    email: sales@dispatch.me
+servers:
+- url: https://files-api.dispatch.me
+  description: Production
+- url: https://files-api-sandbox.dispatch.me
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Users
+  description: Dispatchers and technicians using the Dispatch applications.
+paths:
+  /v3/users:
+    post:
+      operationId: createUser
+      tags:
+      - Users
+      summary: Create a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    get:
+      operationId: listUsers
+      tags:
+      - Users
+      summary: List users
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - name: filter[by_user_roles]
+        in: query
+        description: Search for users in the provided role(s)
+        schema:
+          type: string
+      - name: filter[email_eq]
+        in: query
+        description: Search for users by email
+        schema:
+          type: string
+          format: email
+      - name: filter[organization_id_eq]
+        in: query
+        description: Search for users in a specific organization
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v3/users/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    get:
+      operationId: getUser
+      tags:
+      - Users
+      summary: View a single user
+      responses:
+        '200':
+          description: The user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateUser
+      tags:
+      - Users
+      summary: Update a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: The updated user
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: deactivateUser
+      tags:
+      - Users
+      summary: Delete / deactivate a user
+      responses:
+        '204':
+          description: User deactivated
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v3/users/{id}/restore:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    post:
+      operationId: reactivateUser
+      tags:
+      - Users
+      summary: Reactivate a user
+      responses:
+        '200':
+          description: User reactivated
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of records to return. Maximum value is 100.
+      schema:
+        type: integer
+        maximum: 100
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+  schemas:
+    Location:
+      type: object
+      description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
+      required:
+      - street_1
+      - city
+      properties:
+        street_1:
+          type: string
+        street_2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+          description: Two-character state/province abbreviation
+        postal_code:
+          type: string
+          description: 5-digit US or 6-character Canadian postal code
+        timezone:
+          type: string
+          description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
+    User:
+      type: object
+      required:
+      - organization_id
+      - first_name
+      - last_name
+      - roles
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        organization_id:
+          type: string
+          description: Organization this user is assigned to
+        first_name:
+          type: string
+        last_name:
+          type: string
+        address:
+          $ref: '#/components/schemas/Location'
+        phone_number:
+          type: string
+          description: RFC 3966 format
+        email:
+          type: string
+          format: email
+        photo_token:
+          type: string
+          description: Token for the user photo in the Dispatch file system
+        roles:
+          type: array
+          description: Valid roles are dispatcher and technician. Users may hold both. Technician-only users cannot log in to the desktop application.
+          items:
+            type: string
+            enum:
+            - dispatcher
+            - technician
+        password:
+          type: string
+          writeOnly: true
+          description: Only used for creation and updating. Never returned on GET.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token obtained from the core API at POST /v3/oauth/token.
+x-apievangelist:
+  generated: '2026-07-20'
+  method: generated
+  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+  note: Generated from the "Files and Photos" section of Dispatch's public REST API v3 documentation. The Files API is served from a different host than the core API.

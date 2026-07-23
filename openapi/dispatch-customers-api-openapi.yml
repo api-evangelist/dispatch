@@ -1,0 +1,249 @@
+openapi: 3.1.0
+info:
+  title: Dispatch Files API v1 Appointments Customers API
+  version: '1'
+  summary: Upload and retrieve photos and other files shared with service providers and customers.
+  description: The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.
+  contact:
+    name: Dispatch
+    url: https://dispatch.me/contact
+    email: sales@dispatch.me
+servers:
+- url: https://files-api.dispatch.me
+  description: Production
+- url: https://files-api-sandbox.dispatch.me
+  description: Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Customers
+  description: The homeowner or end customer a job belongs to.
+paths:
+  /v3/customers:
+    post:
+      operationId: createCustomer
+      tags:
+      - Customers
+      summary: Create a customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer:
+                  $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customer:
+                    $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    get:
+      operationId: listCustomers
+      tags:
+      - Customers
+      summary: List customers
+      x-path-inferred: true
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - name: filter[email_eq]
+        in: query
+        description: Find a customer by email
+        schema:
+          type: string
+          format: email
+      - name: filter[external_id_contains]
+        in: query
+        description: Find a customer with a given external ID
+        schema:
+          type: string
+      - name: filter[organization_id_eq]
+        in: query
+        description: Find customers for a specific organization
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of customers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v3/customers/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    patch:
+      operationId: updateCustomer
+      tags:
+      - Customers
+      summary: Update a customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer:
+                  $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: The updated customer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customer:
+                    $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: deleteCustomer
+      tags:
+      - Customers
+      summary: Delete a customer
+      responses:
+        '204':
+          description: Customer deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Customer:
+      type: object
+      required:
+      - organization_id
+      - first_name
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        organization_id:
+          type: integer
+          description: ID of the parent organization
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company_name:
+          type: string
+        notes:
+          type: string
+        email:
+          type: string
+          format: email
+          description: Single email address per customer. Used for email notifications when configured.
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+        home_address:
+          $ref: '#/components/schemas/Location'
+        billing_address:
+          $ref: '#/components/schemas/Location'
+        external_ids:
+          type: array
+          items:
+            type: string
+          description: Your ID(s) for this customer. Available to job sources only.
+    Location:
+      type: object
+      description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
+      required:
+      - street_1
+      - city
+      properties:
+        street_1:
+          type: string
+        street_2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+          description: Two-character state/province abbreviation
+        postal_code:
+          type: string
+          description: 5-digit US or 6-character Canadian postal code
+        timezone:
+          type: string
+          description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
+    PhoneNumber:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Phone number in RFC 3966 format
+        primary:
+          type: boolean
+          description: Set true for the number that receives SMS notifications
+        type:
+          type: string
+          description: 'For example: Mobile, Work'
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of records to return. Maximum value is 100.
+      schema:
+        type: integer
+        maximum: 100
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token obtained from the core API at POST /v3/oauth/token.
+x-apievangelist:
+  generated: '2026-07-20'
+  method: generated
+  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+  note: Generated from the "Files and Photos" section of Dispatch's public REST API v3 documentation. The Files API is served from a different host than the core API.
