@@ -1,0 +1,52 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Dispatch Files API v1
+  version: 1.0.0
+extends: openapi/dispatch-files-v1-openapi.yml
+x-apievangelist:
+  generated: '2026-07-20'
+  method: generated
+  source: >-
+    Derived from the API Evangelist artifacts in this repo, grounded in
+    https://github.com/DispatchMe/v3-api-docs
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-artifacts:
+        authentication: authentication/dispatch-authentication.yml
+        conventions: conventions/dispatch-conventions.yml
+        sandbox: sandbox/dispatch-sandbox.yml
+      x-apievangelist-spec-provenance: generated-from-provider-docs
+      x-token-source: >-
+        Bearer tokens are issued by the core API at POST /v3/oauth/token on
+        https://api.dispatch.me - the Files API has no token endpoint of its own.
+
+  - target: $.servers
+    update:
+      x-environments:
+        production: https://files-api.dispatch.me
+        sandbox: https://files-api-sandbox.dispatch.me
+
+  - target: $.paths['/v1/datafiles'].post
+    update:
+      x-agentic-access:
+        action-class: acting
+        consequence: write
+        rationale: >-
+          Uploads customer-visible media that is shared with service providers and
+          homeowners. Uploaded content cannot be assumed removable.
+        audit: required
+        token:
+          max-ttl-seconds: 900
+
+  - target: $.paths['/v1/datafiles/{uid}'].get
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        data-sensitivity: pii
+        rationale: >-
+          Job photos routinely depict a customer's home interior and exterior. Redirects to
+          a storage URL - do not cache or forward the redirect target.
+        token:
+          max-ttl-seconds: 3600

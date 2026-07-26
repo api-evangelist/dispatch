@@ -1,0 +1,63 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#environments
+docs: https://github.com/DispatchMe/v3-api-docs
+summary: >-
+  Dispatch runs a fully separate sandbox environment for integration testing before going
+  live, spanning the core API, the Files API and the desktop application. Credentials are
+  issued per environment by an account manager; Dispatch publishes no self-service signup
+  and no magic test values.
+separation:
+  model: separate-host
+  description: >-
+    Test and live are separated by hostname rather than by key prefix or a mode flag. The
+    same request shapes and the same OAuth 2.0 credential exchange apply in both; the
+    caller switches base URL.
+environments:
+  - name: sandbox
+    purpose: Test your integration before putting it into the wild.
+    api_base_url: https://api-sandbox.dispatch.me
+    files_api_base_url: https://files-api-sandbox.dispatch.me
+    application_url: https://work-sandbox.dispatch.me
+    token_url: https://api-sandbox.dispatch.me/v3/oauth/token
+    verified: '2026-07-20'
+    http_status: 200
+  - name: production
+    purpose: Real jobs and customers.
+    api_base_url: https://api.dispatch.me
+    files_api_base_url: https://files-api.dispatch.me
+    application_url: https://work.dispatch.me
+    token_url: https://api.dispatch.me/v3/oauth/token
+    verified: '2026-07-20'
+    http_status: 200
+credentials:
+  self_service: false
+  description: >-
+    Public and secret keys are provided by Dispatch on signup and are environment-scoped.
+    The documentation directs integrators to their account manager for sandbox
+    credentials; there is no developer signup form that issues keys automatically.
+  contact: https://dispatch.me/contact
+test_values:
+  published: false
+  note: >-
+    Dispatch publishes no magic test identifiers, seeded fixtures, test clocks or
+    simulation triggers. Test data is created through the ordinary write operations in the
+    sandbox environment (for example POST /v3/work_orders, POST /v3/jobs/factory), so
+    nothing is recorded here rather than inventing values.
+fixture_tooling:
+  - name: POST /v3/jobs/factory
+    operation: openapi/dispatch-rest-v3-openapi.yml#createJobWithRelatedRecords
+    description: >-
+      Creates a job together with its customer, organization and appointment records in a
+      single call - the fastest way to seed a coherent test scenario in sandbox.
+  - name: POST /v3/work_orders
+    operation: openapi/dispatch-rest-v3-openapi.yml#createWorkOrder
+    description: >-
+      The recommended composite entry point; creates the job, customer, organization and
+      appointment windows and runs the chosen orchestration algorithm.
+constraints:
+  geographic: Locations are supported in the United States and Canada only, in sandbox as in production.
+related:
+  - authentication/dispatch-authentication.yml
+  - conventions/dispatch-conventions.yml
+  - lifecycle/dispatch-lifecycle.yml

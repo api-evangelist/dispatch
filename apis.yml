@@ -1,24 +1,391 @@
 aid: dispatch
 name: Dispatch
-description: Dispatch is a company surfaced as a portfolio company of a16z, y-combinator and added to
-  the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  Dispatch (Dispatch Technologies, Boston MA) is a service-orchestration platform for
+  enterprises that fulfil work through networks of independent contractors and third-party
+  service providers - manufacturer warranty, home and property claims, retail, franchise
+  and proptech. Dispatch gives the brand visibility into work performed by providers who
+  keep using their own field-service tools, and gives the homeowner a tracked, branded
+  service experience. Its public REST API v3 exposes the core business objects - jobs,
+  customers, organizations, appointments, users, sources, brands, survey responses and
+  composite work orders - to job sources such as warranty companies and equipment
+  manufacturers, and to service enterprises running first-party branch networks. The API
+  is secured with OAuth 2.0 bearer tokens, offers a full sandbox environment, and is
+  documented in a public GitHub repository.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://dispatch.me/wp-content/uploads/2019/11/cropped-favicon-1-300x300.png
 url: https://raw.githubusercontent.com/api-evangelist/dispatch/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - a16z
 - y-combinator
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: public-rest-api
+x-identity-note: >-
+  This slug was created from VC portfolio harvests that list only the name "Dispatch" with
+  no domain, and at least three unrelated companies share it. This repo profiles Dispatch
+  Technologies (dispatch.me), the field-service orchestration platform - the identity
+  confirmed by a live public API and a GitHub organization (github.com/DispatchMe) whose
+  homepage field points at dispatch.me. The Y Combinator entry
+  (ycombinator.com/companies/dispatch, Spring 2026) is a different company: Dispatch, the
+  space-logistics firm at dispatch.space building reentry vehicles and orbital
+  infrastructure - it has no API surface and should be split into its own slug. A third
+  namesake, dispatch.io, sells client-data onboarding to financial advisors and runs a
+  non-public API at api.dispatch.io with no published developer documentation. The
+  x-backed-by list is therefore unreliable for this repo and should be re-attributed when
+  the portfolio entries are disambiguated.
+x-namesakes:
+- name: Dispatch (space logistics)
+  url: https://dispatch.space/
+  source: https://www.ycombinator.com/companies/dispatch
+  note: >-
+    Y Combinator Spring 2026. Reentry vehicles and orbital infrastructure for space
+    manufacturing. No API surface. Needs its own slug.
+- name: Dispatch (advisor client data)
+  url: https://dispatch.io/
+  note: >-
+    Client-data onboarding and sync for financial advisors. api.dispatch.io responds but
+    publishes no developer documentation.
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
+- Field Service
+- Service Orchestration
+- Work Orders
+- Scheduling
+- Contractor Networks
+- Home Services
+- Warranty
+- Customer Experience
+- Logistics
 - Company
-apis: []
+apis:
+- aid: dispatch:dispatch-appointments-api
+  name: Dispatch Appointments API
+  description: Scheduled times at which an assigned technician performs work for a job.
+  humanURL: https://github.com/DispatchMe/v3-api-docs
+  baseURL: https://api.dispatch.me
+  tags:
+  - Appointments
+  properties:
+  - type: OpenAPI
+    url: openapi/dispatch-appointments-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs
+  - type: APIReference
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  - type: GettingStarted
+    url: >-
+      https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+  - type: Authentication
+    url: authentication/dispatch-authentication.yml
+  - type: Sandbox
+    url: sandbox/dispatch-sandbox.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+- aid: dispatch:dispatch-authentication-api
+  name: Dispatch Authentication API
+  description: OAuth 2.0 token issuance and refresh.
+  humanURL: https://github.com/DispatchMe/v3-api-docs
+  baseURL: https://api.dispatch.me
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/dispatch-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs
+  - type: APIReference
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  - type: GettingStarted
+    url: >-
+      https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+  - type: Authentication
+    url: authentication/dispatch-authentication.yml
+  - type: Sandbox
+    url: sandbox/dispatch-sandbox.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+- aid: dispatch:dispatch-brands-api
+  name: Dispatch Brands API
+  description: Brands or divisions controlling logo and copy. Accessible only to job sources.
+  humanURL: https://github.com/DispatchMe/v3-api-docs
+  baseURL: https://api.dispatch.me
+  tags:
+  - Brands
+  properties:
+  - type: OpenAPI
+    url: openapi/dispatch-brands-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs
+  - type: APIReference
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  - type: GettingStarted
+    url: >-
+      https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+  - type: Authentication
+    url: authentication/dispatch-authentication.yml
+  - type: Sandbox
+    url: sandbox/dispatch-sandbox.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+- aid: dispatch:dispatch-customers-api
+  name: Dispatch Customers API
+  description: The homeowner or end customer a job belongs to.
+  humanURL: https://github.com/DispatchMe/v3-api-docs
+  baseURL: https://api.dispatch.me
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/dispatch-customers-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs
+  - type: APIReference
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  - type: GettingStarted
+    url: >-
+      https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+  - type: Authentication
+    url: authentication/dispatch-authentication.yml
+  - type: Sandbox
+    url: sandbox/dispatch-sandbox.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+- aid: dispatch:dispatch-files-api
+  name: Dispatch Files API
+  description: Files and photos associated with a job.
+  humanURL: https://github.com/DispatchMe/v3-api-docs
+  baseURL: https://api.dispatch.me
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/dispatch-files-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs
+  - type: APIReference
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  - type: GettingStarted
+    url: >-
+      https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+  - type: Authentication
+    url: authentication/dispatch-authentication.yml
+  - type: Sandbox
+    url: sandbox/dispatch-sandbox.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+- aid: dispatch:dispatch-jobs-api
+  name: Dispatch Jobs API
+  description: A single body of work for a customer, assigned to an organization.
+  humanURL: https://github.com/DispatchMe/v3-api-docs
+  baseURL: https://api.dispatch.me
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/dispatch-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs
+  - type: APIReference
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  - type: GettingStarted
+    url: >-
+      https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+  - type: Authentication
+    url: authentication/dispatch-authentication.yml
+  - type: Sandbox
+    url: sandbox/dispatch-sandbox.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+- aid: dispatch:dispatch-organizations-api
+  name: Dispatch Organizations API
+  description: The branch or third-party service provider responsible for doing the work.
+  humanURL: https://github.com/DispatchMe/v3-api-docs
+  baseURL: https://api.dispatch.me
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/dispatch-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs
+  - type: APIReference
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  - type: GettingStarted
+    url: >-
+      https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+  - type: Authentication
+    url: authentication/dispatch-authentication.yml
+  - type: Sandbox
+    url: sandbox/dispatch-sandbox.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+- aid: dispatch:dispatch-sources-api
+  name: Dispatch Sources API
+  description: Where job information originated.
+  humanURL: https://github.com/DispatchMe/v3-api-docs
+  baseURL: https://api.dispatch.me
+  tags:
+  - Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/dispatch-sources-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs
+  - type: APIReference
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  - type: GettingStarted
+    url: >-
+      https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+  - type: Authentication
+    url: authentication/dispatch-authentication.yml
+  - type: Sandbox
+    url: sandbox/dispatch-sandbox.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+- aid: dispatch:dispatch-survey-responses-api
+  name: Dispatch Survey Responses API
+  description: Customer surveys sent when an appointment or job completes.
+  humanURL: https://github.com/DispatchMe/v3-api-docs
+  baseURL: https://api.dispatch.me
+  tags:
+  - Survey Responses
+  properties:
+  - type: OpenAPI
+    url: openapi/dispatch-survey-responses-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs
+  - type: APIReference
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  - type: GettingStarted
+    url: >-
+      https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+  - type: Authentication
+    url: authentication/dispatch-authentication.yml
+  - type: Sandbox
+    url: sandbox/dispatch-sandbox.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+- aid: dispatch:dispatch-users-api
+  name: Dispatch Users API
+  description: Dispatchers and technicians using the Dispatch applications.
+  humanURL: https://github.com/DispatchMe/v3-api-docs
+  baseURL: https://api.dispatch.me
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/dispatch-users-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs
+  - type: APIReference
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  - type: GettingStarted
+    url: >-
+      https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+  - type: Authentication
+    url: authentication/dispatch-authentication.yml
+  - type: Sandbox
+    url: sandbox/dispatch-sandbox.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+- aid: dispatch:dispatch-work-orders-api
+  name: Dispatch Work Orders API
+  description: Composite object creating jobs, customers, organizations and appointments in one call.
+  humanURL: https://github.com/DispatchMe/v3-api-docs
+  baseURL: https://api.dispatch.me
+  tags:
+  - Work Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/dispatch-work-orders-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs
+  - type: APIReference
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  - type: GettingStarted
+    url: >-
+      https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+  - type: Authentication
+    url: authentication/dispatch-authentication.yml
+  - type: Sandbox
+    url: sandbox/dispatch-sandbox.yml
+  - type: Documentation
+    url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
+common:
+- type: Website
+  url: https://dispatch.me
+- type: Documentation
+  url: https://github.com/DispatchMe/v3-api-docs
+- type: APIReference
+  url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+- type: GettingStarted
+  url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-started
+- type: GitHubOrganization
+  url: https://github.com/DispatchMe
+- type: Blog
+  url: https://dispatch.me/blog
+- type: Support
+  url: https://dispatch.me/contact
+- type: Login
+  url: https://dispatch.me/login
+- type: TermsOfService
+  url: https://dispatch.me/terms-of-service
+- type: PrivacyPolicy
+  url: https://dispatch.me/privacy-policy
+- type: StatusPage
+  url: https://status.dispatch.me
+- type: Authentication
+  url: authentication/dispatch-authentication.yml
+- type: Conventions
+  url: conventions/dispatch-conventions.yml
+- type: ErrorCatalog
+  url: errors/dispatch-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/dispatch-lifecycle.yml
+- type: Sandbox
+  url: sandbox/dispatch-sandbox.yml
+- type: DataModel
+  url: data-model/dispatch-data-model.yml
+- type: Conformance
+  url: conformance/dispatch-conformance.yml
+- type: Webhooks
+  url: asyncapi/dispatch-webhooks.yml
+- type: WellKnown
+  url: well-known/dispatch-well-known.yml
+- type: Packages
+  url: packages/dispatch-packages.yml
+- type: SDKs
+  url: packages/dispatch-packages.yml
+- type: MCPServer
+  url: mcp/dispatch-mcp.yml
+- type: LLMsTxt
+  url: llms/dispatch-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DomainSecurity
+  url: security/dispatch-domain-security.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1

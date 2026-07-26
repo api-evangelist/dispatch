@@ -1,0 +1,237 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/dispatch-rest-v3-openapi.yml
+docs: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#dispatch-business-objects
+summary: >-
+  Entity-relationship graph for the Dispatch REST API v3, derived from the generated
+  OpenAPI schema $refs and id-reference fields, and cross-checked against the provider's
+  own "Dispatch Business Objects" table. Identifiers are integers assigned by Dispatch;
+  there are no typed id prefixes. Several objects additionally carry caller-supplied
+  external_ids.
+identifiers:
+  style: integer
+  prefixes: []
+  external_ids:
+    field: external_ids
+    entities: [Job, Customer, Organization]
+    availability: Job sources only.
+    note: Dispatch recommends storing the Dispatch ID as well, because external ID support is limited.
+value_objects:
+  - name: Location
+    description: >-
+      Not a business object - an attribute on Job (address), Customer (home_address,
+      billing_address), Organization (address), User (address) and WorkOrder (location).
+      US and Canada only.
+    used_by: [Job, Customer, Organization, User, WorkOrder, Contact]
+  - name: PhoneNumber
+    description: RFC 3966 number with a primary flag and a free-text type.
+    used_by: [Customer]
+  - name: ContactMethod
+    description: Labelled phone number or email address with a preferred flag.
+    used_by: [Contact]
+  - name: AppointmentWindow
+    description: start_time / end_time pair offered to an organization to choose from.
+    used_by: [WorkOrder, Job]
+entities:
+  - name: Organization
+    description: >-
+      The branch of your business, or the third-party service provider, responsible for
+      doing the work. Deduplicated on creation.
+    operations: [createOrganization, listOrganizations, getOrganization, updateOrganization, deleteOrganization]
+    relationships:
+      - type: has_many
+        target: Job
+        via: organization_id
+      - type: has_many
+        target: Customer
+        via: organization_id
+      - type: has_many
+        target: User
+        via: organization_id
+  - name: Customer
+    description: The homeowner or end customer. A job belongs to a single customer.
+    operations: [createCustomer, listCustomers, updateCustomer, deleteCustomer]
+    relationships:
+      - type: belongs_to
+        target: Organization
+        via: organization_id
+        required: true
+      - type: has_many
+        target: Job
+        via: customer_id
+      - type: has_many
+        target: PhoneNumber
+        via: phone_numbers
+        kind: embedded
+  - name: Job
+    description: A single body of work for a customer, assigned to an organization.
+    operations: [createJob, listJobs, getJob, updateJob, createJobWithRelatedRecords]
+    status_enum: [unscheduled, scheduled, paused, complete, canceled]
+    relationships:
+      - type: belongs_to
+        target: Customer
+        via: customer_id
+        required: true
+      - type: belongs_to
+        target: Organization
+        via: organization_id
+        required: true
+      - type: belongs_to
+        target: Brand
+        via: brand_id
+        required: false
+      - type: belongs_to
+        target: Source
+        via: source_id
+        required: false
+        note: Null when the job is a retail job created by the organization.
+      - type: has_many
+        target: Appointment
+        via: job_id
+      - type: has_many
+        target: Contact
+        via: contacts
+        kind: embedded
+      - type: has_many
+        target: SurveyResponse
+        via: job_id
+      - type: has_many
+        target: JobEquipmentDescription
+        via: equipment_descriptions
+        kind: embedded
+      - type: has_many
+        target: MarketingAttribution
+        via: marketing_attributions
+        kind: embedded
+      - type: has_one
+        target: Location
+        via: address
+        kind: embedded
+  - name: Appointment
+    description: A scheduled time at which an assigned technician performs the work for a job.
+    operations: [createAppointment, listAppointments, getAppointment, updateAppointment, deleteAppointment]
+    status_enum: [draft, scheduled, enroute, started, complete, canceled]
+    relationships:
+      - type: belongs_to
+        target: Job
+        via: job_id
+        required: true
+      - type: belongs_to
+        target: User
+        via: user_id
+        required: false
+        note: The assigned technician.
+      - type: has_many
+        target: SurveyResponse
+        via: appointment_id
+    cascades:
+      - Scheduling an appointment moves its parent job to the "scheduled" status.
+      - Canceling a job moves all of its child appointments to "canceled".
+  - name: User
+    description: >-
+      A user of the Dispatch applications. Roles are dispatcher and technician; a user may
+      hold both. Technician-only users cannot sign in to the desktop application.
+    operations: [createUser, listUsers, getUser, updateUser, deactivateUser, reactivateUser]
+    relationships:
+      - type: belongs_to
+        target: Organization
+        via: organization_id
+        required: true
+      - type: has_many
+        target: Appointment
+        via: user_id
+  - name: Brand
+    description: >-
+      A brand or division controlling logo and copy across the applications, the customer
+      portal and notifications. Accessible only to job sources; falls back to the account
+      level when a job carries no brand_id.
+    operations: [createBrand, listBrands, updateBrand, deleteBrand]
+    relationships:
+      - type: has_many
+        target: Job
+        via: brand_id
+  - name: Source
+    description: >-
+      Where the job information originated. An organization integrating with Dispatch may
+      receive jobs from multiple sources.
+    operations: [listSources, getSource]
+    relationships:
+      - type: has_many
+        target: Job
+        via: source_id
+  - name: SurveyResponse
+    description: Customer survey sent when an appointment or job completes; carries a 0-5 rating and a message.
+    operations: [listSurveyResponses]
+    relationships:
+      - type: belongs_to
+        target: Job
+        via: job_id
+      - type: belongs_to
+        target: Appointment
+        via: appointment_id
+        required: false
+  - name: Contact
+    description: A person to notify about a job. Embedded on Job and on WorkOrder, with its own sub-resource routes.
+    operations: [listJobContacts, updateJobContacts, updateJobContact]
+    relationships:
+      - type: belongs_to
+        target: Job
+        via: job id in path
+      - type: has_many
+        target: ContactMethod
+        via: phone_numbers / email_addresses
+        kind: embedded
+  - name: WorkOrder
+    description: >-
+      Composite object carrying everything needed to create a job, its customer, its
+      organization and appointment windows in one request. Dispatch recommends this as the
+      default integration surface unless individual object access is required.
+    operations: [createWorkOrder, updateWorkOrder, cancelWorkOrder]
+    orchestration_enum: [direct_offer, direct_assign]
+    relationships:
+      - type: has_one
+        target: Job
+        via: composite creation
+      - type: has_many
+        target: Organization
+        via: organizations
+        kind: embedded
+      - type: has_many
+        target: Contact
+        via: contacts
+        kind: embedded
+      - type: has_many
+        target: AppointmentWindow
+        via: appointment_windows
+        kind: embedded
+      - type: belongs_to
+        target: Brand
+        via: brand_id
+        required: false
+  - name: Datafile
+    description: A photo or other file associated with a job, stored in the separately hosted Files API.
+    api: openapi/dispatch-files-v1-openapi.yml
+    operations: [uploadDatafile, getDatafile]
+    identifier: uid (UUID)
+    relationships:
+      - type: has_many
+        target: Job
+        via: referenced by token
+        note: >-
+          Datafile tokens are referenced from Organization.logo_token and User.photo_token
+          and shared against jobs.
+  - name: JobEquipmentDescription
+    description: >-
+      Equipment described by the source of work with enough information to start the job.
+      Embedded on Job; Dispatch publishes no standalone attribute table.
+    embedded_in: Job
+  - name: MarketingAttribution
+    description: >-
+      Marketing attribution associated with a job; side-loadable via
+      GET /v3/jobs/:id?include=marketing_attributions.
+    embedded_in: Job
+render: null
+related:
+  - openapi/dispatch-rest-v3-openapi.yml
+  - openapi/dispatch-files-v1-openapi.yml
+  - conventions/dispatch-conventions.yml

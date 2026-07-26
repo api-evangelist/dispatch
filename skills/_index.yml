@@ -1,0 +1,61 @@
+generated: '2026-07-20'
+method: generated
+source: >-
+  Grounded in openapi/dispatch-rest-v3-openapi.yml and the Dispatch REST API v3
+  documentation at https://github.com/DispatchMe/v3-api-docs. Every operationId referenced
+  in a skill exists verbatim in the spec.
+note: >-
+  Dispatch publishes no AGENTS.md or provider-authored agent skills; the GitHub
+  organization was checked on 2026-07-20. These are API Evangelist generations, one per
+  marquee flow, covering the two sides of the platform (job source and service provider)
+  plus the correlation discipline that stands in for Dispatch's missing idempotency
+  contract.
+skills:
+- file: dispatch-dispatch-a-work-order.md
+  name: Dispatch a work order
+  description: >-
+    Send a job into the Dispatch network as a job source, using the composite work order
+    that creates the job, customer, organization and appointment windows in one call.
+  api: openapi/dispatch-rest-v3-openapi.yml
+  audience: job source
+  operations: [createToken, createWorkOrder, listJobs, getJob, updateWorkOrder, cancelWorkOrder]
+- file: dispatch-schedule-and-track-an-appointment.md
+  name: Schedule and track an appointment
+  description: >-
+    Move a job from unscheduled to complete - assign a technician, schedule, follow the
+    enroute/started/complete status machine, and read the customer survey.
+  api: openapi/dispatch-rest-v3-openapi.yml
+  audience: service provider
+  operations:
+    - createToken
+    - listJobs
+    - getJob
+    - listUsers
+    - createAppointment
+    - listAppointments
+    - getAppointment
+    - updateAppointment
+    - createJobTimeWindow
+    - listSurveyResponses
+- file: dispatch-sync-customers-and-organizations.md
+  name: Sync customers and organizations with external IDs
+  description: >-
+    Use the external_ids correlation field and organization deduplication to keep your
+    system of record aligned with Dispatch without creating duplicates, and to reconcile
+    writes that carry no idempotency guarantee.
+  api: openapi/dispatch-rest-v3-openapi.yml
+  audience: job source
+  operations:
+    - createToken
+    - listCustomers
+    - createCustomer
+    - updateCustomer
+    - deleteCustomer
+    - listOrganizations
+    - getOrganization
+    - createOrganization
+    - updateOrganization
+    - listJobs
+    - listJobContacts
+    - updateJobContacts
+    - updateJobContact

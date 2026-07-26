@@ -1,0 +1,1319 @@
+openapi: 3.1.0
+x-apievangelist:
+  generated: '2026-07-20'
+  method: generated
+  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  note: >-
+    Dispatch publishes no machine-readable specification. This document was generated
+    faithfully from the provider's own public REST API v3 documentation repository
+    (DispatchMe/v3-api-docs, a public Slate docs site). Paths, methods, entity attributes,
+    query parameters, statuses and error codes are transcribed from that source. Nothing
+    was invented. Where the docs describe a list operation in prose without printing the
+    endpoint line, the operation is flagged with x-path-inferred.
+info:
+  title: Dispatch REST API v3
+  version: '3'
+  summary: Field-service orchestration API for jobs, customers, organizations, appointments and work orders.
+  description: >-
+    The Dispatch REST API lets job sources (warranty companies, equipment manufacturers,
+    lead-generation platforms) and service enterprises interact with Dispatch's core
+    business objects to implement their service workflow on the Dispatch platform.
+    Job sources authenticate with OAuth 2.0 client credentials; individual service
+    providers authenticate with the resource-owner password grant.
+  contact:
+    name: Dispatch
+    url: https://dispatch.me/contact
+    email: sales@dispatch.me
+  x-documentation: https://github.com/DispatchMe/v3-api-docs
+servers:
+  - url: https://api.dispatch.me
+    description: Production
+  - url: https://api-sandbox.dispatch.me
+    description: Sandbox
+tags:
+  - name: Authentication
+    description: OAuth 2.0 token issuance and refresh.
+  - name: Appointments
+    description: Scheduled times at which an assigned technician performs work for a job.
+  - name: Brands
+    description: Brands or divisions controlling logo and copy. Accessible only to job sources.
+  - name: Customers
+    description: The homeowner or end customer a job belongs to.
+  - name: Jobs
+    description: A single body of work for a customer, assigned to an organization.
+  - name: Organizations
+    description: The branch or third-party service provider responsible for doing the work.
+  - name: Sources
+    description: Where job information originated.
+  - name: Survey Responses
+    description: Customer surveys sent when an appointment or job completes.
+  - name: Users
+    description: Dispatchers and technicians using the Dispatch applications.
+  - name: Work Orders
+    description: Composite object creating jobs, customers, organizations and appointments in one call.
+security:
+  - bearerAuth: []
+paths:
+  /v3/oauth/token:
+    post:
+      operationId: createToken
+      tags: [Authentication]
+      summary: Retrieve or refresh a bearer token
+      description: >-
+        Exchange credentials for an OAuth 2.0 bearer token. Job sources use the
+        client_credentials grant; a single service provider uses the password grant.
+        Tokens are temporary - handle 401 responses by retrieving a new token.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/ClientCredentialsGrant'
+                - $ref: '#/components/schemas/PasswordGrant'
+                - $ref: '#/components/schemas/RefreshTokenGrant'
+      responses:
+        '200':
+          description: Token issued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+
+  /v3/appointments:
+    post:
+      operationId: createAppointment
+      tags: [Appointments]
+      summary: Create an appointment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appointment: { $ref: '#/components/schemas/Appointment' }
+      responses:
+        '201':
+          description: Appointment created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appointment: { $ref: '#/components/schemas/Appointment' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+    get:
+      operationId: listAppointments
+      tags: [Appointments]
+      summary: List appointments
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - name: filter[job_id_eq]
+          in: query
+          description: Parent job ID
+          schema: { type: integer }
+        - name: filter[job_id_in]
+          in: query
+          description: Parent job IDs (comma separated)
+          schema: { type: string }
+        - name: filter[organization_id_eq]
+          in: query
+          description: Parent organization ID
+          schema: { type: integer }
+        - name: filter[status_eq]
+          in: query
+          description: Appointments in a specific status
+          schema: { $ref: '#/components/schemas/AppointmentStatus' }
+        - name: filter[status_in]
+          in: query
+          description: Specific statuses (comma separated)
+          schema: { type: string }
+        - name: filter[time_gt]
+          in: query
+          description: Appointments scheduled after the given ISO8601 time
+          schema: { type: string, format: date-time }
+        - name: filter[time_gteq]
+          in: query
+          description: Appointments scheduled on or after the given ISO8601 time
+          schema: { type: string, format: date-time }
+        - name: filter[time_lt]
+          in: query
+          description: Appointments scheduled before the given ISO8601 time
+          schema: { type: string, format: date-time }
+        - name: filter[time_lteq]
+          in: query
+          description: Appointments scheduled on or before the given ISO8601 time
+          schema: { type: string, format: date-time }
+        - name: filter[user_id_eq]
+          in: query
+          description: Appointments assigned to a particular technician
+          schema: { type: integer }
+        - name: filter[user_id_in]
+          in: query
+          description: Appointments assigned to technicians (comma separated)
+          schema: { type: string }
+        - name: filter[user_id_null]
+          in: query
+          description: Show unassigned appointments (value should be true)
+          schema: { type: boolean }
+      responses:
+        '200':
+          description: A list of appointments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appointments:
+                    type: array
+                    items: { $ref: '#/components/schemas/Appointment' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+
+  /v3/appointments/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      operationId: getAppointment
+      tags: [Appointments]
+      summary: View a single appointment
+      responses:
+        '200':
+          description: The appointment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appointment: { $ref: '#/components/schemas/Appointment' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      operationId: updateAppointment
+      tags: [Appointments]
+      summary: Update an appointment
+      description: >-
+        Scheduling an appointment also moves its parent job to the "scheduled" status.
+        Canceling a job cancels all of its child appointments.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appointment: { $ref: '#/components/schemas/Appointment' }
+      responses:
+        '200':
+          description: The updated appointment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appointment: { $ref: '#/components/schemas/Appointment' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+    delete:
+      operationId: deleteAppointment
+      tags: [Appointments]
+      summary: Delete an appointment
+      responses:
+        '204': { description: Appointment deleted }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /v3/brands:
+    post:
+      operationId: createBrand
+      tags: [Brands]
+      summary: Create a brand
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Brand' }
+      responses:
+        '201':
+          description: Brand created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  brand: { $ref: '#/components/schemas/Brand' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+    get:
+      operationId: listBrands
+      tags: [Brands]
+      summary: List brands
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: A list of brands
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  brands:
+                    type: array
+                    items: { $ref: '#/components/schemas/Brand' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+
+  /v3/brands/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    patch:
+      operationId: updateBrand
+      tags: [Brands]
+      summary: Update a brand
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Brand' }
+      responses:
+        '200':
+          description: The updated brand
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  brand: { $ref: '#/components/schemas/Brand' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+    delete:
+      operationId: deleteBrand
+      tags: [Brands]
+      summary: Delete a brand
+      responses:
+        '204': { description: Brand deleted }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /v3/customers:
+    post:
+      operationId: createCustomer
+      tags: [Customers]
+      summary: Create a customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer: { $ref: '#/components/schemas/Customer' }
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customer: { $ref: '#/components/schemas/Customer' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+    get:
+      operationId: listCustomers
+      tags: [Customers]
+      summary: List customers
+      x-path-inferred: true
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - name: filter[email_eq]
+          in: query
+          description: Find a customer by email
+          schema: { type: string, format: email }
+        - name: filter[external_id_contains]
+          in: query
+          description: Find a customer with a given external ID
+          schema: { type: string }
+        - name: filter[organization_id_eq]
+          in: query
+          description: Find customers for a specific organization
+          schema: { type: integer }
+      responses:
+        '200':
+          description: A list of customers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customers:
+                    type: array
+                    items: { $ref: '#/components/schemas/Customer' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /v3/customers/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    patch:
+      operationId: updateCustomer
+      tags: [Customers]
+      summary: Update a customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer: { $ref: '#/components/schemas/Customer' }
+      responses:
+        '200':
+          description: The updated customer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customer: { $ref: '#/components/schemas/Customer' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+    delete:
+      operationId: deleteCustomer
+      tags: [Customers]
+      summary: Delete a customer
+      responses:
+        '204': { description: Customer deleted }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /v3/jobs:
+    post:
+      operationId: createJob
+      tags: [Jobs]
+      summary: Create a job
+      description: >-
+        Create a job for an existing customer and organization. Contacts, equipment
+        descriptions and marketing attributions may be supplied inline.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                job: { $ref: '#/components/schemas/Job' }
+      responses:
+        '201':
+          description: Job created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job: { $ref: '#/components/schemas/Job' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+    get:
+      operationId: listJobs
+      tags: [Jobs]
+      summary: List jobs
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - name: filter[brand_id_eq]
+          in: query
+          description: Jobs in a certain brand
+          schema: { type: integer }
+        - name: filter[source_id_eq]
+          in: query
+          description: Jobs in a certain source
+          schema: { type: integer }
+        - name: filter[customer_id_eq]
+          in: query
+          description: Jobs for a certain customer
+          schema: { type: integer }
+        - name: filter[customer_id_in]
+          in: query
+          description: Jobs for a group of customers (comma separated)
+          schema: { type: string }
+        - name: filter[external_ids_contains]
+          in: query
+          description: Jobs with a certain external ID
+          schema: { type: string }
+        - name: filter[organization_id_eq]
+          in: query
+          description: Jobs assigned to a certain organization
+          schema: { type: integer }
+        - name: filter[organization_id_in]
+          in: query
+          description: Jobs assigned to a group of organizations (comma separated)
+          schema: { type: string }
+        - name: filter[status_eq]
+          in: query
+          description: Jobs in a certain status
+          schema: { $ref: '#/components/schemas/JobStatus' }
+        - name: filter[status_in]
+          in: query
+          description: Jobs in a group of statuses (comma separated)
+          schema: { type: string }
+        - name: filter[status_not_eq]
+          in: query
+          description: Jobs that are not in a certain status
+          schema: { $ref: '#/components/schemas/JobStatus' }
+      responses:
+        '200':
+          description: A list of jobs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobs:
+                    type: array
+                    items: { $ref: '#/components/schemas/Job' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /v3/jobs/factory:
+    post:
+      operationId: createJobWithRelatedRecords
+      tags: [Jobs]
+      summary: Create a job with related records
+      description: >-
+        Create a job together with its customer, organization and appointment records
+        in a single call.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                job: { $ref: '#/components/schemas/Job' }
+                customer: { $ref: '#/components/schemas/Customer' }
+                organization: { $ref: '#/components/schemas/Organization' }
+      responses:
+        '201':
+          description: Job and related records created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job: { $ref: '#/components/schemas/Job' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+
+  /v3/jobs/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      operationId: getJob
+      tags: [Jobs]
+      summary: Get a job
+      parameters:
+        - name: include
+          in: query
+          description: >-
+            Side-load related collections, e.g. marketing_attributions.
+          schema: { type: string }
+      responses:
+        '200':
+          description: The job
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job: { $ref: '#/components/schemas/Job' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      operationId: updateJob
+      tags: [Jobs]
+      summary: Update a job
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                job: { $ref: '#/components/schemas/Job' }
+      responses:
+        '200':
+          description: The updated job
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job: { $ref: '#/components/schemas/Job' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+
+  /v3/jobs/{job_id}/time_windows:
+    parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema: { type: integer }
+    post:
+      operationId: createJobTimeWindow
+      tags: [Jobs]
+      summary: Add customer-suggested times to a job
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                time_windows:
+                  type: array
+                  items: { $ref: '#/components/schemas/AppointmentWindow' }
+      responses:
+        '201':
+          description: Time windows added
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+
+  /v3/jobs/{id}/contacts:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      operationId: listJobContacts
+      tags: [Jobs]
+      summary: List the contacts on a job
+      responses:
+        '200':
+          description: A list of contacts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contacts:
+                    type: array
+                    items: { $ref: '#/components/schemas/Contact' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      operationId: updateJobContacts
+      tags: [Jobs]
+      summary: Update the contacts on a job
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contacts:
+                  type: array
+                  items: { $ref: '#/components/schemas/Contact' }
+      responses:
+        '200':
+          description: The updated contacts
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+
+  /v3/jobs/{id}/contacts/{contact_id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+      - name: contact_id
+        in: path
+        required: true
+        schema: { type: integer }
+    patch:
+      operationId: updateJobContact
+      tags: [Jobs]
+      summary: Update a single contact on a job
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact: { $ref: '#/components/schemas/Contact' }
+      responses:
+        '200':
+          description: The updated contact
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+
+  /v3/organizations:
+    post:
+      operationId: createOrganization
+      tags: [Organizations]
+      summary: Create an organization
+      description: >-
+        Organizations are deduplicated on creation. Deduplication may be bypassed as
+        described in the documentation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization: { $ref: '#/components/schemas/Organization' }
+      responses:
+        '201':
+          description: Organization created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  organization: { $ref: '#/components/schemas/Organization' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+    get:
+      operationId: listOrganizations
+      tags: [Organizations]
+      summary: List organizations
+      x-path-inferred: true
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - name: filter[external_ids_contains]
+          in: query
+          description: Organizations with a certain external ID
+          schema: { type: string }
+      responses:
+        '200':
+          description: A list of organizations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  organizations:
+                    type: array
+                    items: { $ref: '#/components/schemas/Organization' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /v3/organizations/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      operationId: getOrganization
+      tags: [Organizations]
+      summary: View a single organization
+      responses:
+        '200':
+          description: The organization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  organization: { $ref: '#/components/schemas/Organization' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      operationId: updateOrganization
+      tags: [Organizations]
+      summary: Update an organization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization: { $ref: '#/components/schemas/Organization' }
+      responses:
+        '200':
+          description: The updated organization
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+    delete:
+      operationId: deleteOrganization
+      tags: [Organizations]
+      summary: Delete an organization
+      responses:
+        '204': { description: Organization deleted }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /v3/sources:
+    get:
+      operationId: listSources
+      tags: [Sources]
+      summary: List sources
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+      responses:
+        '200':
+          description: A list of sources
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sources:
+                    type: array
+                    items: { $ref: '#/components/schemas/Source' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /v3/sources/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      operationId: getSource
+      tags: [Sources]
+      summary: View a single source
+      responses:
+        '200':
+          description: The source
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  source: { $ref: '#/components/schemas/Source' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /v3/survey_responses:
+    get:
+      operationId: listSurveyResponses
+      tags: [Survey Responses]
+      summary: List survey responses
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - name: filter[job_id_eq]
+          in: query
+          description: Survey responses for a specific job
+          schema: { type: integer }
+      responses:
+        '200':
+          description: A list of survey responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  survey_responses:
+                    type: array
+                    items: { $ref: '#/components/schemas/SurveyResponse' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /v3/users:
+    post:
+      operationId: createUser
+      tags: [Users]
+      summary: Create a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user: { $ref: '#/components/schemas/User' }
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user: { $ref: '#/components/schemas/User' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+    get:
+      operationId: listUsers
+      tags: [Users]
+      summary: List users
+      parameters:
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - name: filter[by_user_roles]
+          in: query
+          description: Search for users in the provided role(s)
+          schema: { type: string }
+        - name: filter[email_eq]
+          in: query
+          description: Search for users by email
+          schema: { type: string, format: email }
+        - name: filter[organization_id_eq]
+          in: query
+          description: Search for users in a specific organization
+          schema: { type: integer }
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items: { $ref: '#/components/schemas/User' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /v3/users/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      operationId: getUser
+      tags: [Users]
+      summary: View a single user
+      responses:
+        '200':
+          description: The user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user: { $ref: '#/components/schemas/User' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      operationId: updateUser
+      tags: [Users]
+      summary: Update a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user: { $ref: '#/components/schemas/User' }
+      responses:
+        '200':
+          description: The updated user
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+    delete:
+      operationId: deactivateUser
+      tags: [Users]
+      summary: Delete / deactivate a user
+      responses:
+        '204': { description: User deactivated }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /v3/users/{id}/restore:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    post:
+      operationId: reactivateUser
+      tags: [Users]
+      summary: Reactivate a user
+      responses:
+        '200': { description: User reactivated }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /v3/work_orders:
+    post:
+      operationId: createWorkOrder
+      tags: [Work Orders]
+      summary: Create a work order
+      description: >-
+        The recommended entry point. A work order carries all the information needed to
+        create the job, customer, organization and appointment windows in one call, and
+        selects an orchestration algorithm for offering or assigning the work.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/WorkOrder' }
+      responses:
+        '201':
+          description: Work order created
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+
+  /v3/work_orders/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    patch:
+      operationId: updateWorkOrder
+      tags: [Work Orders]
+      summary: Update a work order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/WorkOrder' }
+      responses:
+        '200': { description: The updated work order }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+
+  /v3/work_orders/{id}/cancel:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    post:
+      operationId: cancelWorkOrder
+      tags: [Work Orders]
+      summary: Cancel a work order
+      description: Canceling cancels the job and the status of all child appointments.
+      responses:
+        '200': { description: Work order canceled }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        OAuth 2.0 bearer token obtained from POST /v3/oauth/token. Tokens are temporary
+        (expires_in is returned with the token) and must be refreshed on 401.
+    oauth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0. Job sources use client_credentials; individual service providers use
+        the resource-owner password grant. Dispatch does not document a scope vocabulary -
+        access is governed by an account-level ACL agreed with the account manager.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.dispatch.me/v3/oauth/token
+          refreshUrl: https://api.dispatch.me/v3/oauth/token
+          scopes: {}
+        password:
+          tokenUrl: https://api.dispatch.me/v3/oauth/token
+          refreshUrl: https://api.dispatch.me/v3/oauth/token
+          scopes: {}
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema: { type: integer }
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of records to return. Maximum value is 100.
+      schema: { type: integer, maximum: 100 }
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema: { type: integer, minimum: 0 }
+  responses:
+    BadRequest:
+      description: Bad Request - your request is malformed or otherwise invalid.
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    UnprocessableEntity:
+      description: >-
+        Unprocessable Entity - your request payload did not pass validation rules.
+        See the response body for details.
+    TooManyRequests:
+      description: Too Many Requests - you have exceeded your rate limit.
+    InternalServerError:
+      description: Internal Server Error - Dispatch had a problem. Try again later.
+    ServiceUnavailable:
+      description: Service Unavailable - temporarily offline for maintenance. Try again later.
+  schemas:
+    ClientCredentialsGrant:
+      type: object
+      description: Job-source authentication.
+      required: [grant_type, client_id, client_secret]
+      properties:
+        grant_type: { type: string, const: client_credentials }
+        client_id: { type: string, description: Your public key }
+        client_secret: { type: string, description: Your secret key }
+    PasswordGrant:
+      type: object
+      description: Single service provider (user) authentication.
+      required: [grant_type, username, password, client_id, client_secret]
+      properties:
+        grant_type: { type: string, const: password }
+        username: { type: string, format: email }
+        password: { type: string }
+        client_id: { type: string }
+        client_secret: { type: string }
+    RefreshTokenGrant:
+      type: object
+      required: [grant_type, refresh_token]
+      properties:
+        grant_type: { type: string, const: refresh_token }
+        refresh_token: { type: string }
+    TokenResponse:
+      type: object
+      properties:
+        access_token: { type: string }
+        token_type: { type: string, examples: [bearer] }
+        created_at: { type: integer, description: Unix timestamp }
+        expires_in: { type: integer, description: Lifetime in seconds }
+        refresh_token: { type: string }
+    Location:
+      type: object
+      description: >-
+        Locations are not business objects, but attributes on several core objects.
+        Dispatch currently supports locations in the US and Canada only.
+      required: [street_1, city]
+      properties:
+        street_1: { type: string }
+        street_2: { type: string }
+        city: { type: string }
+        state: { type: string, description: Two-character state/province abbreviation }
+        postal_code: { type: string, description: 5-digit US or 6-character Canadian postal code }
+        timezone:
+          type: string
+          description: >-
+            IANA timezone. If not provided Dispatch attempts to derive it from the
+            postal code.
+    PhoneNumber:
+      type: object
+      properties:
+        number: { type: string, description: Phone number in RFC 3966 format }
+        primary: { type: boolean, description: Set true for the number that receives SMS notifications }
+        type: { type: string, description: 'For example: Mobile, Work' }
+    AppointmentWindow:
+      type: object
+      properties:
+        start_time: { type: string, format: date-time }
+        end_time: { type: string, format: date-time }
+    AppointmentStatus:
+      type: string
+      description: >-
+        Appointments move freely between statuses. Technicians update status from the
+        mobile app.
+      enum: [draft, scheduled, enroute, started, complete, canceled]
+    JobStatus:
+      type: string
+      description: Jobs move freely between statuses.
+      enum: [unscheduled, scheduled, paused, complete, canceled]
+    Appointment:
+      type: object
+      required: [job_id, status]
+      properties:
+        id: { type: integer, readOnly: true }
+        job_id: { type: integer, description: ID of the parent job }
+        time: { type: string, format: date-time, description: ISO8601 scheduled time }
+        duration: { type: integer, description: Duration in seconds. Defaults to 7200 (2 hours). }
+        user_id: { type: integer, description: ID of the assigned technician }
+        status: { $ref: '#/components/schemas/AppointmentStatus' }
+    Customer:
+      type: object
+      required: [organization_id, first_name]
+      properties:
+        id: { type: integer, readOnly: true }
+        organization_id: { type: integer, description: ID of the parent organization }
+        first_name: { type: string }
+        last_name: { type: string }
+        company_name: { type: string }
+        notes: { type: string }
+        email:
+          type: string
+          format: email
+          description: >-
+            Single email address per customer. Used for email notifications when configured.
+        phone_numbers:
+          type: array
+          items: { $ref: '#/components/schemas/PhoneNumber' }
+        home_address: { $ref: '#/components/schemas/Location' }
+        billing_address: { $ref: '#/components/schemas/Location' }
+        external_ids:
+          type: array
+          items: { type: string }
+          description: Your ID(s) for this customer. Available to job sources only.
+    Job:
+      type: object
+      required: [title, customer_id, organization_id, address, status]
+      properties:
+        id: { type: integer, readOnly: true }
+        title: { type: string }
+        description: { type: string, description: Additional details. Markdown is supported. }
+        service_type: { type: string, description: 'Type of service, e.g. plumbing' }
+        customer_id: { type: integer }
+        organization_id: { type: integer }
+        external_ids:
+          type: array
+          items: { type: string }
+        address: { $ref: '#/components/schemas/Location' }
+        brand_id: { type: integer }
+        source_id:
+          type: [integer, 'null']
+          description: Null when the job is a retail job created by the organization.
+        contacts:
+          type: array
+          items: { $ref: '#/components/schemas/Contact' }
+        equipment_descriptions:
+          type: array
+          items: { type: object }
+        marketing_attributions:
+          type: array
+          items: { type: object }
+        service_fee:
+          type: number
+          description: Fee the customer owes the warranty company or other source of work.
+        service_fee_precollected:
+          type: boolean
+          description: Whether the customer fee was collected before the job was scheduled.
+        status: { $ref: '#/components/schemas/JobStatus' }
+        status_message: { type: string, description: Optional qualifier for the current status }
+    Contact:
+      type: object
+      properties:
+        id: { type: integer, readOnly: true }
+        first_name: { type: string }
+        last_name: { type: string }
+        company_name: { type: string }
+        external_id: { type: string }
+        primary: { type: boolean }
+        notes: { type: string }
+        phone_numbers:
+          type: array
+          items: { $ref: '#/components/schemas/ContactMethod' }
+        email_addresses:
+          type: array
+          items: { $ref: '#/components/schemas/ContactMethod' }
+        billing_address: { $ref: '#/components/schemas/Location' }
+    ContactMethod:
+      type: object
+      properties:
+        label: { type: string, description: 'For example: mobile, work' }
+        value: { type: string }
+        preferred: { type: boolean }
+    Organization:
+      type: object
+      required: [name, email]
+      properties:
+        id: { type: integer, readOnly: true }
+        name: { type: string }
+        external_ids:
+          type: array
+          items: { type: string }
+        address: { $ref: '#/components/schemas/Location' }
+        phone_number: { type: string, description: RFC 3966 format }
+        email: { type: string, format: email }
+        logo_token: { type: string, description: Token for the organization logo in the Dispatch file system }
+    Brand:
+      type: object
+      description: >-
+        Brands or divisions within your company controlling copy and logo for the mobile
+        and web applications and customer notifications. Accessible only to job sources.
+      properties:
+        id: { type: integer, readOnly: true }
+        name: { type: string }
+        phone_number: { type: string }
+        logo_token: { type: string }
+        email: { type: string, format: email }
+    Source:
+      type: object
+      description: Where the job information originated.
+      properties:
+        id: { type: integer, readOnly: true }
+        name: { type: string, description: Machine-readable source name }
+        title: { type: string, description: Human-readable source name }
+    SurveyResponse:
+      type: object
+      description: Sent to customers when an appointment or job is completed.
+      properties:
+        job_id: { type: integer }
+        appointment_id:
+          type: [integer, 'null']
+          description: Null when there was no appointment.
+        rating: { type: integer, minimum: 0, maximum: 5, description: 0-5 rating from the customer }
+        message: { type: string, description: Additional feedback from the customer }
+    User:
+      type: object
+      required: [organization_id, first_name, last_name, roles]
+      properties:
+        id: { type: integer, readOnly: true }
+        organization_id: { type: string, description: Organization this user is assigned to }
+        first_name: { type: string }
+        last_name: { type: string }
+        address: { $ref: '#/components/schemas/Location' }
+        phone_number: { type: string, description: RFC 3966 format }
+        email: { type: string, format: email }
+        photo_token: { type: string, description: Token for the user photo in the Dispatch file system }
+        roles:
+          type: array
+          description: >-
+            Valid roles are dispatcher and technician. Users may hold both. Technician-only
+            users cannot log in to the desktop application.
+          items:
+            type: string
+            enum: [dispatcher, technician]
+        password:
+          type: string
+          writeOnly: true
+          description: Only used for creation and updating. Never returned on GET.
+    WorkOrder:
+      type: object
+      description: >-
+        The recommended integration surface - carries everything needed to create a job,
+        its customer, its organization and appointment windows in one request.
+      required: [title, location]
+      properties:
+        title: { type: string }
+        description: { type: string, description: Markdown is supported }
+        service_type: { type: string }
+        brand_id: { type: integer }
+        orchestration: { $ref: '#/components/schemas/OrchestrationAlgorithm' }
+        external_id: { type: string }
+        location: { $ref: '#/components/schemas/Location' }
+        appointment_windows:
+          type: array
+          description: Optional windows for the organization to choose from.
+          items: { $ref: '#/components/schemas/AppointmentWindow' }
+        contacts:
+          type: array
+          items: { $ref: '#/components/schemas/Contact' }
+        organizations:
+          type: array
+          description: >-
+            Organizations to send or offer the work to. In direct_* orchestration only a
+            single organization is permitted.
+          items: { $ref: '#/components/schemas/Organization' }
+    OrchestrationAlgorithm:
+      type: string
+      description: >-
+        direct_offer offers the job to a single organization (job starts in offered status);
+        direct_assign assigns the job to a single organization (job starts in unscheduled status).
+      enum: [direct_offer, direct_assign]

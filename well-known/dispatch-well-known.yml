@@ -1,0 +1,33 @@
+generated: '2026-07-20'
+method: searched
+probe_date: '2026-07-20'
+summary: >-
+  Dispatch publishes no /.well-known/ discovery surface. Every standard document was
+  probed on both the corporate host and the API host and returned 404. Recorded as an
+  honest negative result.
+hosts:
+  - host: https://dispatch.me
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://api.dispatch.me
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+files: []

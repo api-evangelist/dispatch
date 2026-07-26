@@ -1,0 +1,172 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+docs: https://github.com/DispatchMe/v3-api-docs
+summary: >-
+  Cross-cutting request/response semantics for the Dispatch REST API v3, captured from
+  the provider's public documentation and confirmed against live response headers on
+  https://api.dispatch.me.
+authentication:
+  style: oauth2-bearer
+  header: Authorization
+  detail: authentication/dispatch-authentication.yml
+media_types:
+  request: [application/json, multipart/form-data]
+  response: [application/json]
+  detail: >-
+    The core API exchanges JSON. The Files API accepts multipart/form-data for uploads.
+envelope:
+  style: singular-and-plural-root-key
+  description: >-
+    Responses wrap the payload in a root key named for the resource - a single record uses
+    the singular key (for example `{"appointment": {...}}`) and a collection uses the
+    plural key (for example `{"appointments": [...]}`). Requests use the same singular
+    root key.
+pagination:
+  style: limit-offset
+  params:
+    limit:
+      in: query
+      max: 100
+      description: Maximum number of records to return. The maximum permitted value is 100.
+    offset:
+      in: query
+      description: Number of records to skip.
+  applies_to: All GET requests that return multiple records.
+  example: '?filter[job_id]=123&filter[status]=scheduled&limit=100&offset=1000'
+  cursor_supported: false
+  response_fields: []
+filtering:
+  style: nested-filter-object
+  description: >-
+    Filters are provided as nested values on a `filter` object in the query string.
+    Predicate suffixes are appended to the attribute name.
+  example: '?filter[job_id]=123&filter[status]=scheduled'
+  predicates:
+    - suffix: _eq
+      description: Exact match on the attribute.
+    - suffix: _not_eq
+      description: Negated exact match.
+    - suffix: _in
+      description: Match any of a comma-separated list of values.
+    - suffix: _null
+      description: Match records where the attribute is null (pass true).
+    - suffix: _contains
+      description: Substring / membership match, used for external ID lookups.
+    - suffix: _gt
+      description: Greater than (timestamps).
+    - suffix: _gteq
+      description: Greater than or equal (timestamps).
+    - suffix: _lt
+      description: Less than (timestamps).
+    - suffix: _lteq
+      description: Less than or equal (timestamps).
+field_expansion:
+  style: include-parameter
+  param: include
+  description: >-
+    Related collections can be side-loaded on a single-record GET via the `include` query
+    parameter, for example GET /v3/jobs/:id?include=marketing_attributions.
+  sparse_fieldsets: false
+idempotency:
+  supported: false
+  header: null
+  description: >-
+    Dispatch documents no idempotency-key header or replay window for its write
+    operations. In its place the API offers an application-level dedupe mechanism:
+    `external_ids` (see external_identifiers below) lets a caller reference its own record
+    IDs so that repeated creates resolve to existing customers and organizations rather
+    than creating duplicates, and organization creation is explicitly deduplicated with a
+    documented bypass. This is a correlation/dedupe contract, not a true idempotency
+    contract - a repeated POST is not guaranteed to be replayed safely.
+external_identifiers:
+  field: external_ids
+  type: array of strings
+  description: >-
+    Several business objects carry an `external_ids` attribute holding the caller's own
+    ID(s) for that object. Dispatch uses them to identify existing customers or
+    organizations instead of creating new ones, and to let callers look objects up by
+    their own ID. Dispatch nonetheless recommends storing the Dispatch object ID, because
+    external ID support is limited.
+  availability: Job sources only.
+deduplication:
+  organizations:
+    enabled: true
+    description: Organization creation is deduplicated; the documentation describes how to bypass deduplication.
+request_tracing:
+  headers:
+    - name: X-Request-Id
+      direction: response
+      observed: true
+      description: Per-request identifier returned on every response. Confirmed on a live HEAD to https://api.dispatch.me.
+    - name: X-Transaction-ID
+      direction: request-and-response
+      observed: true
+      description: >-
+        Returned on responses and accepted on requests (listed in the API's
+        Access-Control-Allow-Headers), allowing a caller to correlate a transaction.
+    - name: X-Runtime
+      direction: response
+      observed: true
+      description: Server processing time in seconds.
+versioning:
+  scheme: uri-path
+  current: v3
+  detail: >-
+    The core API is versioned in the URI path (/v3/...). The Files API is independently
+    versioned (/v1/datafiles). An X-API-Version request header is also accepted, per the
+    API's Access-Control-Allow-Headers.
+  headers_accepted: [X-API-Version]
+  see: lifecycle/dispatch-lifecycle.yml
+errors:
+  style: http-status-with-validation-body
+  problem_json: false
+  description: >-
+    Errors are signaled with conventional HTTP status codes. 422 responses carry
+    validation detail in the response body. Dispatch does not use RFC 9457
+    application/problem+json.
+  detail: errors/dispatch-problem-types.yml
+rate_limiting:
+  signaled: true
+  status: 429
+  headers_documented: []
+  description: >-
+    A 429 "Too Many Requests" status is documented, but Dispatch publishes no rate-limit
+    headers, quota values or reset semantics.
+events:
+  webhooks: true
+  self_service: false
+  description: >-
+    Subscribing to changes on your objects via webhooks is supported but is not
+    self-service - it is configured through an account manager.
+  detail: asyncapi/dispatch-webhooks.yml
+cors:
+  enabled: true
+  observed_allow_methods: [DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT]
+  observed_allow_headers:
+    - Origin
+    - Content-Type
+    - Content-Length
+    - Accept-Encoding
+    - X-CSRF-Token
+    - Authorization
+    - X-Transaction-ID
+    - X-Analytics-Tags
+    - Analytics-Client-Id
+    - X-Account-ID
+    - X-API-Version
+    - Client-Id
+  source: live HEAD https://api.dispatch.me/ on 2026-07-20
+caching:
+  etag: true
+  cache_control: 'max-age=0, private, must-revalidate'
+  vary: [Accept, Origin]
+  source: live HEAD https://api.dispatch.me/ on 2026-07-20
+geographic_scope:
+  description: Locations are supported in the United States and Canada only.
+related:
+  - authentication/dispatch-authentication.yml
+  - errors/dispatch-problem-types.yml
+  - lifecycle/dispatch-lifecycle.yml
+  - sandbox/dispatch-sandbox.yml
+  - data-model/dispatch-data-model.yml

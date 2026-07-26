@@ -1,0 +1,34 @@
+{
+  "provider": "dispatch",
+  "sources": [
+    "dispatch-appointments-api-openapi.yml",
+    "dispatch-authentication-api-openapi.yml",
+    "dispatch-brands-api-openapi.yml",
+    "dispatch-customers-api-openapi.yml",
+    "dispatch-files-api-openapi.yml",
+    "dispatch-jobs-api-openapi.yml",
+    "dispatch-organizations-api-openapi.yml",
+    "dispatch-sources-api-openapi.yml",
+    "dispatch-survey-responses-api-openapi.yml",
+    "dispatch-users-api-openapi.yml",
+    "dispatch-work-orders-api-openapi.yml"
+  ],
+  "outputs": [
+    "dispatch-appointments-api-openapi.yml",
+    "dispatch-authentication-api-openapi.yml",
+    "dispatch-brands-api-openapi.yml",
+    "dispatch-customers-api-openapi.yml",
+    "dispatch-files-api-openapi.yml",
+    "dispatch-jobs-api-openapi.yml",
+    "dispatch-organizations-api-openapi.yml",
+    "dispatch-sources-api-openapi.yml",
+    "dispatch-survey-responses-api-openapi.yml",
+    "dispatch-users-api-openapi.yml",
+    "dispatch-work-orders-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

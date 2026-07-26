@@ -1,0 +1,83 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/DispatchMe
+summary: >-
+  Dispatch publishes no client libraries to npm, PyPI, NuGet, RubyGems, Packagist,
+  pkg.go.dev or crates.io - all were searched on 2026-07-20 and returned no first-party
+  Dispatch package. The one first-party client library is a .NET SDK published as source
+  in the company's public GitHub organization; it is archived and unmaintained. Everything
+  else in the DispatchMe organization is an internal utility or a fork of a third-party
+  library, not a Dispatch API client, and is recorded here as non-client for completeness.
+packages:
+- language: dotnet
+  registry: github
+  name: dispatch-dotnet-sdk
+  url: https://github.com/DispatchMe/dispatch-dotnet-sdk
+  install: git clone https://github.com/DispatchMe/dispatch-dotnet-sdk
+  official: true
+  archived: true
+  status: unmaintained
+  description: >-
+    Dispatch .NET SDK with a sample web application, per the repository description in the
+    DispatchMe organization. Source-only - never published to NuGet - and the repository
+    is archived. Treat it as a reference implementation of the OAuth 2.0 token exchange
+    and v3 calls rather than a supported dependency.
+registries_searched:
+- registry: npm
+  query: dispatch.me
+  result: no first-party package
+- registry: nuget
+  query: Dispatch.me
+  result: no first-party package
+- registry: pypi
+  query: dispatch-me
+  result: 404
+- registry: rubygems
+  query: dispatch.me
+  result: no first-party package
+- registry: pkg.go.dev
+  result: no first-party module published by DispatchMe
+- registry: packagist
+  result: no first-party package
+- registry: crates.io
+  result: no first-party package
+non_client_repositories:
+  note: >-
+    Public repositories in the DispatchMe GitHub organization that are internal tooling or
+    forks of third-party projects rather than Dispatch API clients. Listed so a later pass
+    does not re-evaluate them as SDKs.
+  repositories:
+  - name: v3-api-docs
+    url: https://github.com/DispatchMe/v3-api-docs
+    kind: documentation
+    note: The public Slate source for the Dispatch REST API v3 documentation - the canonical API reference.
+  - name: gojsonschema
+    kind: fork
+  - name: go-work
+    kind: internal-utility
+  - name: go-debug
+    kind: internal-utility
+  - name: go-sqlbuilder
+    kind: internal-utility
+  - name: logstar
+    kind: internal-utility
+  - name: datafactory
+    kind: internal-utility
+  - name: mgp
+    kind: internal-utility
+  - name: twilio-go
+    kind: fork
+  - name: gochimp
+    kind: fork
+  - name: mockery
+    kind: fork
+  - name: OAuth2-Go
+    kind: sample
+  - name: react-draggable
+    kind: fork
+  - name: react-rnd
+    kind: fork
+  - name: re-resizable
+    kind: fork
+  - name: react-native-signature-canvas
+    kind: fork

@@ -1,0 +1,65 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/includes/_errors.md
+docs: https://github.com/DispatchMe/v3-api-docs
+format: http-status
+problem_json: false
+envelope:
+  description: >-
+    Dispatch signals errors with conventional HTTP status codes rather than RFC 9457
+    problem+json. Validation failures (422) return the failing rules in the response body;
+    Dispatch does not publish a machine-readable error-code registry or a documented body
+    schema for the other statuses.
+problems:
+  - status: 400
+    title: Bad Request
+    meaning: Your request is malformed or otherwise invalid.
+    remediation: Check the request body, content type and query-string syntax before retrying.
+    retryable: false
+  - status: 401
+    title: Unauthorized
+    meaning: Your OAuth2 bearer token is incorrect.
+    remediation: >-
+      Tokens are temporary. Retrieve a new bearer token from POST /v3/oauth/token - either
+      by re-authenticating or by exchanging your refresh_token - and retry the request.
+      Dispatch explicitly requires integrations to handle 401 this way.
+    retryable: true
+    source_operation: openapi/dispatch-rest-v3-openapi.yml#createToken
+  - status: 403
+    title: Forbidden
+    meaning: Your credentials are correct, but you are not allowed to perform this action.
+    remediation: >-
+      Access is governed by an account-level ACL that depends on your relationship with
+      the organization. Confirm the object is in scope for your network with your account
+      manager.
+    retryable: false
+  - status: 404
+    title: Not Found
+    meaning: Requested resource could not be found.
+    remediation: Verify the object ID, or look the record up by your own identifier using filter[external_ids_contains].
+    retryable: false
+  - status: 422
+    title: Unprocessable Entity
+    meaning: Your request payload did not pass Dispatch validation rules.
+    remediation: Read the response body for the per-field validation detail and correct the payload.
+    retryable: false
+  - status: 429
+    title: Too Many Requests
+    meaning: You have exceeded your rate limit.
+    remediation: >-
+      Back off and retry. Dispatch publishes no rate-limit headers, quota values or reset
+      semantics, so use exponential backoff.
+    retryable: true
+  - status: 500
+    title: Internal Server Error
+    meaning: Dispatch had a problem with its server.
+    remediation: Retry later with backoff. Capture the X-Request-Id from the response when reporting the failure.
+    retryable: true
+  - status: 503
+    title: Service Unavailable
+    meaning: Dispatch is temporarily offline for maintenance.
+    remediation: Retry later with backoff. Check https://status.dispatch.me for maintenance windows.
+    retryable: true
+related:
+  - conventions/dispatch-conventions.yml
+  - lifecycle/dispatch-lifecycle.yml

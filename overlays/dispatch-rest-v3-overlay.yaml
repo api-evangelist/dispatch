@@ -1,0 +1,162 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Dispatch REST API v3
+  version: 1.0.0
+extends: openapi/dispatch-rest-v3-openapi.yml
+x-apievangelist:
+  generated: '2026-07-20'
+  method: generated
+  source: >-
+    Derived from the API Evangelist artifacts in this repo (conventions, errors,
+    authentication, lifecycle, sandbox, webhooks), all grounded in
+    https://github.com/DispatchMe/v3-api-docs.
+  note: >-
+    Dispatch publishes no machine-readable specification, so the base document is itself
+    an API Evangelist generation from the provider's public docs. This overlay records the
+    governance and agent-readiness annotations layered on top of it, kept separate so the
+    transcription of the provider's documentation stays clean.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-artifacts:
+        authentication: authentication/dispatch-authentication.yml
+        conventions: conventions/dispatch-conventions.yml
+        errors: errors/dispatch-problem-types.yml
+        lifecycle: lifecycle/dispatch-lifecycle.yml
+        sandbox: sandbox/dispatch-sandbox.yml
+        data_model: data-model/dispatch-data-model.yml
+        conformance: conformance/dispatch-conformance.yml
+        webhooks: asyncapi/dispatch-webhooks.yml
+        skills: skills/_index.yml
+      x-apievangelist-spec-provenance: generated-from-provider-docs
+      x-status-page: https://status.dispatch.me
+
+  - target: $.info
+    update:
+      x-conventions:
+        pagination:
+          style: limit-offset
+          max_limit: 100
+        filtering:
+          style: nested-filter-object
+          predicates: [_eq, _not_eq, _in, _null, _contains, _gt, _gteq, _lt, _lteq]
+        envelope: resource-named-root-key
+        idempotency:
+          supported: false
+          alternative: external_ids
+        request_id_header: X-Request-Id
+        transaction_id_header: X-Transaction-ID
+        geographic_scope: [US, CA]
+
+  - target: $.components.securitySchemes.oauth2
+    update:
+      x-credential-issuance: account-manager
+      x-self-service: false
+      x-scopes-published: false
+      x-access-control: account-level ACL negotiated per network relationship
+
+  - target: $.servers
+    update:
+      x-environments:
+        production: https://api.dispatch.me
+        sandbox: https://api-sandbox.dispatch.me
+        production_application: https://work.dispatch.me
+        sandbox_application: https://work-sandbox.dispatch.me
+
+  # Agentic access classification — recommended execution contracts, not provider claims.
+  - target: $.paths['/v3/work_orders'].post
+    update:
+      x-agentic-access:
+        action-class: acting
+        consequence: physical
+        rationale: >-
+          Creates and dispatches real field work to a service provider, committing a
+          technician visit to a customer address.
+        human-in-the-loop: recommended
+        audit: required
+        token:
+          max-ttl-seconds: 300
+          purpose-required: true
+
+  - target: $.paths['/v3/work_orders/{id}/cancel'].post
+    update:
+      x-agentic-access:
+        action-class: acting
+        consequence: physical
+        rationale: >-
+          Cancels dispatched work, cancelling the job and every child appointment already
+          promised to a customer and a technician.
+        human-in-the-loop: recommended
+        audit: required
+        token:
+          max-ttl-seconds: 300
+          purpose-required: true
+
+  - target: $.paths['/v3/appointments'].post
+    update:
+      x-agentic-access:
+        action-class: acting
+        consequence: physical
+        rationale: >-
+          Commits a technician to a time at a customer address, and moves the parent job to
+          the scheduled status.
+        human-in-the-loop: recommended
+        audit: required
+        token:
+          max-ttl-seconds: 300
+
+  - target: $.paths['/v3/jobs'].get
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        token:
+          max-ttl-seconds: 3600
+
+  - target: $.paths['/v3/appointments'].get
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        token:
+          max-ttl-seconds: 3600
+
+  - target: $.paths['/v3/customers'].get
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        data-sensitivity: pii
+        rationale: Returns homeowner names, email addresses, phone numbers and home addresses.
+        token:
+          max-ttl-seconds: 3600
+
+  - target: $.paths['/v3/users/{id}'].delete
+    update:
+      x-agentic-access:
+        action-class: acting
+        consequence: write
+        rationale: Deactivates a user account. Reversible via reactivateUser.
+        audit: required
+        token:
+          max-ttl-seconds: 900
+
+  - target: $.paths['/v3/organizations/{id}'].delete
+    update:
+      x-agentic-access:
+        action-class: acting
+        consequence: write
+        rationale: Removes a service provider organization; not documented as reversible.
+        human-in-the-loop: recommended
+        audit: required
+        token:
+          max-ttl-seconds: 900
+
+  - target: $.paths['/v3/oauth/token'].post
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        rationale: Credential exchange. Never expose the client_secret to an agent context.
+        token:
+          max-ttl-seconds: 300

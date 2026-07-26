@@ -1,0 +1,199 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+source: openapi/dispatch-rest-v3-openapi.yml
+summary: >-
+  Dispatch publishes no hosted or remote MCP server - none was found in the company's
+  GitHub organization, its documentation, or the public MCP registries. The tool list
+  below is a candidate surface derived one-to-one from the operations in the generated
+  OpenAPI, for anyone standing up an MCP server in front of the Dispatch REST API v3.
+server:
+  name: dispatch
+  transport: stdio
+  url: null
+  published: false
+auth:
+  model: oauth2-bearer
+  note: >-
+    A server would exchange a Dispatch public/secret key pair for a bearer token at
+    POST /v3/oauth/token and refresh on 401. Point it at https://api-sandbox.dispatch.me
+    while developing.
+  detail: authentication/dispatch-authentication.yml
+safety_notes:
+- >-
+  Write operations affect real dispatched field work - creating or canceling a work order
+  offers or withdraws a job from a live service provider. Gate create/update/cancel/delete
+  tools behind confirmation.
+- >-
+  Dispatch documents no idempotency key, so a retried write is not safe to replay. Use the
+  external_ids field to correlate caller-side records instead.
+- >-
+  Delete on users is a deactivation and is reversible via reactivateUser; delete on
+  appointments, brands, customers and organizations is not documented as reversible.
+tools:
+- name: list_jobs
+  description: List jobs, filtered by brand, source, customer, organization, status or external ID.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#listJobs
+- name: get_job
+  description: Retrieve a single job, optionally side-loading marketing attributions.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#getJob
+- name: create_job
+  description: Create a job for an existing customer and organization.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#createJob
+- name: create_job_with_related_records
+  description: Create a job together with its customer, organization and appointment records in one call.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#createJobWithRelatedRecords
+- name: update_job
+  description: Update a job, including moving it between statuses.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#updateJob
+- name: add_job_time_window
+  description: Add customer-suggested appointment time windows to a job.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#createJobTimeWindow
+- name: list_job_contacts
+  description: List the contacts to be notified about a job.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#listJobContacts
+- name: update_job_contacts
+  description: Replace or update the contacts on a job.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#updateJobContacts
+- name: update_job_contact
+  description: Update a single contact on a job.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#updateJobContact
+- name: list_appointments
+  description: List appointments, filtered by job, organization, technician, status or scheduled time range.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#listAppointments
+- name: get_appointment
+  description: Retrieve a single appointment.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#getAppointment
+- name: create_appointment
+  description: Schedule an appointment on a job. Scheduling also moves the parent job to "scheduled".
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#createAppointment
+- name: update_appointment
+  description: Update an appointment, including its status, time, duration or assigned technician.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#updateAppointment
+- name: delete_appointment
+  description: Delete an appointment.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#deleteAppointment
+- name: list_customers
+  description: Find customers by email, external ID or organization.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#listCustomers
+- name: create_customer
+  description: Create a customer under an organization.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#createCustomer
+- name: update_customer
+  description: Update a customer.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#updateCustomer
+- name: delete_customer
+  description: Delete a customer.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#deleteCustomer
+- name: list_organizations
+  description: List organizations, filtered by external ID.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#listOrganizations
+- name: get_organization
+  description: Retrieve a single organization.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#getOrganization
+- name: create_organization
+  description: Create an organization. Dispatch deduplicates organizations on creation.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#createOrganization
+- name: update_organization
+  description: Update an organization.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#updateOrganization
+- name: delete_organization
+  description: Delete an organization.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#deleteOrganization
+- name: list_users
+  description: List users, filtered by role, email or organization.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#listUsers
+- name: get_user
+  description: Retrieve a single user.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#getUser
+- name: create_user
+  description: Create a dispatcher or technician user in an organization.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#createUser
+- name: update_user
+  description: Update a user.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#updateUser
+- name: deactivate_user
+  description: Deactivate a user. Reversible via reactivate_user.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#deactivateUser
+- name: reactivate_user
+  description: Reactivate a previously deactivated user.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#reactivateUser
+- name: list_brands
+  description: List brands. Job sources only.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#listBrands
+- name: create_brand
+  description: Create a brand. Job sources only.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#createBrand
+- name: update_brand
+  description: Update a brand.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#updateBrand
+- name: delete_brand
+  description: Delete a brand.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#deleteBrand
+- name: list_sources
+  description: List the sources jobs originate from.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#listSources
+- name: get_source
+  description: Retrieve a single source.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#getSource
+- name: list_survey_responses
+  description: List customer survey responses, optionally for a specific job.
+  read_only: true
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#listSurveyResponses
+- name: create_work_order
+  description: >-
+    Create a work order - the recommended composite entry point that creates the job,
+    customer, organization and appointment windows and offers or assigns the work.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#createWorkOrder
+- name: update_work_order
+  description: Update a work order.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#updateWorkOrder
+- name: cancel_work_order
+  description: Cancel a work order, cancelling the job and all of its child appointments.
+  read_only: false
+  source_operation: openapi/dispatch-rest-v3-openapi.yml#cancelWorkOrder
+- name: upload_file
+  description: Upload a photo or other file to the Dispatch Files API.
+  read_only: false
+  source_operation: openapi/dispatch-files-v1-openapi.yml#uploadDatafile
+- name: get_file
+  description: Retrieve a file by UID from the Dispatch Files API.
+  read_only: true
+  source_operation: openapi/dispatch-files-v1-openapi.yml#getDatafile

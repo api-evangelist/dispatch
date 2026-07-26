@@ -1,0 +1,50 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#getting-data-back-from-dispatch
+type: Webhooks
+asyncapi_published: false
+summary: >-
+  Dispatch documents a webhook surface for subscribing to changes on your objects, as the
+  push alternative to polling GET endpoints. It is explicitly not self-service - the
+  subscription is configured by a Dispatch account manager - and Dispatch publishes
+  neither an event catalog, a payload schema, a signature scheme, nor an AsyncAPI
+  document. Nothing beyond what the provider states is recorded here.
+webhooks:
+  available: true
+  self_service: false
+  configuration: Arranged through your Dispatch account manager.
+  provider_statement: >-
+    "You can obviously check up on your data by performing GET requests, but we also allow
+    you to subscribe to changes on your objects via webhooks. This feature is not
+    self-service, but if you get in touch with your account manager we can walk you
+    through the details. We hope to create a complete self-service webhook system sometime
+    in the next few quarters."
+  subject: Changes on your Dispatch business objects.
+  candidate_subjects:
+    note: >-
+      Dispatch publishes no event catalog. The objects that carry documented status
+      machines are the ones a change subscription would most plausibly cover; they are
+      listed here as context for an integrator, not as an asserted event list.
+    objects:
+      - entity: Job
+        statuses: [unscheduled, scheduled, paused, complete, canceled]
+      - entity: Appointment
+        statuses: [draft, scheduled, enroute, started, complete, canceled]
+      - entity: SurveyResponse
+        note: Created when an appointment or job completes.
+  event_catalog_published: false
+  payload_schema_published: false
+  signature_scheme_published: false
+  retry_policy_published: false
+polling_alternative:
+  description: >-
+    Absent a webhook subscription, change detection is done by polling the list endpoints
+    with timestamp filters - for example listAppointments with filter[time_gteq], or
+    listJobs with filter[status_in].
+  operations:
+    - openapi/dispatch-rest-v3-openapi.yml#listAppointments
+    - openapi/dispatch-rest-v3-openapi.yml#listJobs
+    - openapi/dispatch-rest-v3-openapi.yml#listSurveyResponses
+related:
+  - conventions/dispatch-conventions.yml
+  - data-model/dispatch-data-model.yml

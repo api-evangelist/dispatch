@@ -1,0 +1,69 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/DispatchMe/v3-api-docs
+versioning:
+  scheme: uri-path
+  current: v3
+  previous: [v1, v2]
+  detail: >-
+    The core Dispatch REST API is versioned in the URI path and is currently on v3, served
+    from https://api.dispatch.me/v3/. The Files API is versioned independently at
+    /v1/datafiles on a separate host. An X-API-Version request header is accepted by the
+    core API (observed in Access-Control-Allow-Headers), but Dispatch publishes no header-
+    or date-based version negotiation policy.
+  docs: https://github.com/DispatchMe/v3-api-docs
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  evidence:
+    - >-
+      Dispatch publishes no standalone deprecation or sunset policy page. The v3
+      documentation does carry an in-place "Migrating from Job Offers" section that maps
+      each retired Work Order field to its v3 replacement and explicitly marks removed
+      capabilities (duration, duration_algorithm and expiration are "no longer supported";
+      ui_options moved to per-account configuration; work orders can now only be sent to
+      organizations). That is a migration guide rather than a deprecation policy, and no
+      Sunset or Deprecation response headers are documented.
+  migration_guides:
+    - name: Migrating from Job Offers
+      url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#migrating-from-job-offers
+      description: Field-by-field mapping from the retired Job Offers surface to v3 Work Orders.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  published: false
+status_page:
+  url: https://status.dispatch.me
+  verified: '2026-07-20'
+  http_status: 200
+  title: Dispatch Status
+support:
+  contact_email: sales@dispatch.me
+  contact_page: https://dispatch.me/contact
+  model: >-
+    API access, credentials, ACL configuration and webhook subscriptions are all arranged
+    through a named account manager rather than self-service.
+environments:
+  - name: production
+    api: https://api.dispatch.me
+    files_api: https://files-api.dispatch.me
+    application: https://work.dispatch.me
+  - name: sandbox
+    api: https://api-sandbox.dispatch.me
+    files_api: https://files-api-sandbox.dispatch.me
+    application: https://work-sandbox.dispatch.me
+changelog:
+  published: false
+  note: >-
+    Dispatch publishes no dated API changelog. The docs repository
+    (DispatchMe/v3-api-docs) carries a CHANGELOG.md, but it belongs to the upstream Slate
+    documentation generator the site is built on, not to the Dispatch API - it is
+    deliberately not captured as a changelog/ artifact.
+related:
+  - conventions/dispatch-conventions.yml
+  - errors/dispatch-problem-types.yml
+  - sandbox/dispatch-sandbox.yml
