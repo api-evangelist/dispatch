@@ -327,6 +327,8 @@ apis:
   - type: Documentation
     url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
 common:
+- type: Overlay
+  url: overlays/dispatch-files-v1-overlay.yaml
 - type: Website
   url: https://dispatch.me
 - type: Documentation
