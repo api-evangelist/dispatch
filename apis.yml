@@ -58,7 +58,7 @@ x-namesakes:
   note: >-
     Client-data onboarding and sync for financial advisors. api.dispatch.io responds but
     publishes no developer documentation.
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-07-20'
 tags:
