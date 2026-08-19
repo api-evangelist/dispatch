@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dispatch Files API v1 Appointments Users API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://files-api.dispatch.me/v3/users",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return. Maximum value is 100."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip."
+              },
+              {
+                "name": "filter[by_user_roles]",
+                "value": "",
+                "type": "query",
+                "description": "Search for users in the provided role(s)"
+              },
+              {
+                "name": "filter[email_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Search for users by email"
+              },
+              {
+                "name": "filter[organization_id_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Search for users in a specific organization"
+              }
+            ]
+          },
+          "docs": "List users"
+        },
+        {
+          "info": {
+            "name": "Create a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://files-api.dispatch.me/v3/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a user"
+        },
+        {
+          "info": {
+            "name": "View a single user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://files-api.dispatch.me/v3/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "View a single user"
+        },
+        {
+          "info": {
+            "name": "Update a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://files-api.dispatch.me/v3/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a user"
+        },
+        {
+          "info": {
+            "name": "Delete / deactivate a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://files-api.dispatch.me/v3/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete / deactivate a user"
+        },
+        {
+          "info": {
+            "name": "Reactivate a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://files-api.dispatch.me/v3/users/:id/restore",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Reactivate a user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

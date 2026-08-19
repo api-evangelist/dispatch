@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dispatch Files API v1 Appointments Survey Responses API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Survey Responses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List survey responses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://files-api.dispatch.me/v3/survey_responses",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return. Maximum value is 100."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip."
+              },
+              {
+                "name": "filter[job_id_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Survey responses for a specific job"
+              }
+            ]
+          },
+          "docs": "List survey responses"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

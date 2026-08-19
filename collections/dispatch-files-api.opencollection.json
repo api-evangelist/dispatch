@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dispatch API v1 Appointments Files API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://files-api.dispatch.me/v1/datafiles",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a photo or other file using Content-Type multipart/form-data with a `file` part. Returns the datafile record including the UID used to retrieve it."
+        },
+        {
+          "info": {
+            "name": "View a file by UID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://files-api.dispatch.me/v1/datafiles/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Responds with a 302 redirect to the stored object."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

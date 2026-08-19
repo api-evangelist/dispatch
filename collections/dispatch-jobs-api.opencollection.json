@@ -1,0 +1,274 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dispatch Files API v1 Appointments Jobs API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://files-api.dispatch.me/v3/jobs",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return. Maximum value is 100."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip."
+              },
+              {
+                "name": "filter[brand_id_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Jobs in a certain brand"
+              },
+              {
+                "name": "filter[source_id_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Jobs in a certain source"
+              },
+              {
+                "name": "filter[customer_id_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Jobs for a certain customer"
+              },
+              {
+                "name": "filter[customer_id_in]",
+                "value": "",
+                "type": "query",
+                "description": "Jobs for a group of customers (comma separated)"
+              },
+              {
+                "name": "filter[external_ids_contains]",
+                "value": "",
+                "type": "query",
+                "description": "Jobs with a certain external ID"
+              },
+              {
+                "name": "filter[organization_id_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Jobs assigned to a certain organization"
+              },
+              {
+                "name": "filter[organization_id_in]",
+                "value": "",
+                "type": "query",
+                "description": "Jobs assigned to a group of organizations (comma separated)"
+              },
+              {
+                "name": "filter[status_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Jobs in a certain status"
+              },
+              {
+                "name": "filter[status_in]",
+                "value": "",
+                "type": "query",
+                "description": "Jobs in a group of statuses (comma separated)"
+              },
+              {
+                "name": "filter[status_not_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that are not in a certain status"
+              }
+            ]
+          },
+          "docs": "List jobs"
+        },
+        {
+          "info": {
+            "name": "Create a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://files-api.dispatch.me/v3/jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a job for an existing customer and organization. Contacts, equipment descriptions and marketing attributions may be supplied inline."
+        },
+        {
+          "info": {
+            "name": "Create a job with related records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://files-api.dispatch.me/v3/jobs/factory",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a job together with its customer, organization and appointment records in a single call."
+        },
+        {
+          "info": {
+            "name": "Get a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://files-api.dispatch.me/v3/jobs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Side-load related collections, e.g. marketing_attributions."
+              }
+            ]
+          },
+          "docs": "Get a job"
+        },
+        {
+          "info": {
+            "name": "Update a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://files-api.dispatch.me/v3/jobs/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a job"
+        },
+        {
+          "info": {
+            "name": "Add customer-suggested times to a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://files-api.dispatch.me/v3/jobs/:job_id/time_windows",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add customer-suggested times to a job"
+        },
+        {
+          "info": {
+            "name": "List the contacts on a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://files-api.dispatch.me/v3/jobs/:id/contacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List the contacts on a job"
+        },
+        {
+          "info": {
+            "name": "Update the contacts on a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://files-api.dispatch.me/v3/jobs/:id/contacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the contacts on a job"
+        },
+        {
+          "info": {
+            "name": "Update a single contact on a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://files-api.dispatch.me/v3/jobs/:id/contacts/:contact_id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a single contact on a job"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

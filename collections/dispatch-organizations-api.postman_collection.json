@@ -1,0 +1,1152 @@
+{
+  "item": [
+    {
+      "id": "8285988c-d2ba-47c7-ac8e-abaff70b9797",
+      "name": "Organizations",
+      "description": {
+        "content": "The branch or third-party service provider responsible for doing the work.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "13795b21-ad26-4eb1-b42c-c1d38cd71535",
+          "name": "Create an organization",
+          "request": {
+            "name": "Create an organization",
+            "description": {
+              "content": "Organizations are deduplicated on creation. Deduplication may be bypassed as described in the documentation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "organizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"external_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"address\": {\n      \"street_1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"street_2\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"phone_number\": \"<string>\",\n    \"logo_token\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9a84232f-3e1d-4d2b-8741-deb8ef0f4a6d",
+              "name": "Organization created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization\": {\n    \"name\": \"string\",\n    \"email\": \"LafnTHWB2d@xCnTiEahyCZyUoASvvVyXeLe.mowk\",\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"logo_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organization\": {\n    \"name\": \"string\",\n    \"email\": \"CF8p@kWYuMQxmGqXtNclCIBcFgHja.rwmd\",\n    \"id\": 9204,\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"logo_token\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ce56d4d-d4d5-4a44-9079-298b75dda37a",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization\": {\n    \"name\": \"string\",\n    \"email\": \"LafnTHWB2d@xCnTiEahyCZyUoASvvVyXeLe.mowk\",\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"logo_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fa5d4ce5-8bbb-4f03-a5f2-ba630ab338dc",
+              "name": "Forbidden - your credentials are correct, but you are not allowed to perform this action.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization\": {\n    \"name\": \"string\",\n    \"email\": \"LafnTHWB2d@xCnTiEahyCZyUoASvvVyXeLe.mowk\",\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"logo_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "70b7db89-775b-4302-93f5-eccd13ace2ca",
+              "name": "Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization\": {\n    \"name\": \"string\",\n    \"email\": \"LafnTHWB2d@xCnTiEahyCZyUoASvvVyXeLe.mowk\",\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"logo_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2be1d133-10d7-4c9b-a8d3-1ec5c4351e6b",
+          "name": "List organizations",
+          "request": {
+            "name": "List organizations",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "organizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return. Maximum value is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Number of records to skip."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[external_ids_contains]",
+                  "value": "<string>",
+                  "description": "Organizations with a certain external ID"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "18bcb6ef-c117-4b42-8bb3-5bd0d0c70d1d",
+              "name": "A list of organizations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[external_ids_contains]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organizations\": [\n    {\n      \"name\": \"string\",\n      \"email\": \"lz73LJkP@zysSLhClUf.kt\",\n      \"id\": 5304,\n      \"external_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"address\": {\n        \"street_1\": \"string\",\n        \"city\": \"string\",\n        \"street_2\": \"string\",\n        \"state\": \"string\",\n        \"postal_code\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"phone_number\": \"string\",\n      \"logo_token\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"email\": \"dPiDVNL@St.qhg\",\n      \"id\": 1852,\n      \"external_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"address\": {\n        \"street_1\": \"string\",\n        \"city\": \"string\",\n        \"street_2\": \"string\",\n        \"state\": \"string\",\n        \"postal_code\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"phone_number\": \"string\",\n      \"logo_token\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b46cdc65-747b-4451-ae1d-3b5203031a7a",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[external_ids_contains]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ab86fad-fd63-4987-b957-1fc8dbd8a271",
+          "name": "View a single organization",
+          "request": {
+            "name": "View a single organization",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "organizations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "134a005a-4842-4e7a-a84a-9ab6c3ebffa0",
+              "name": "The organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organization\": {\n    \"name\": \"string\",\n    \"email\": \"CF8p@kWYuMQxmGqXtNclCIBcFgHja.rwmd\",\n    \"id\": 9204,\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"logo_token\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e83d3983-7329-463c-8831-0abc9974b813",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cf4e929e-7590-4a34-aa2e-59302aa3f259",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "83d87310-344b-4887-ae20-f3e9e5f5f8af",
+          "name": "Update an organization",
+          "request": {
+            "name": "Update an organization",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "organizations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"external_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"address\": {\n      \"street_1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"street_2\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"phone_number\": \"<string>\",\n    \"logo_token\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f0a8c30e-1a03-4175-9785-d3a040796378",
+              "name": "The updated organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization\": {\n    \"name\": \"string\",\n    \"email\": \"LafnTHWB2d@xCnTiEahyCZyUoASvvVyXeLe.mowk\",\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"logo_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c348aef6-9a6e-4bf5-a601-872b415cb1f3",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization\": {\n    \"name\": \"string\",\n    \"email\": \"LafnTHWB2d@xCnTiEahyCZyUoASvvVyXeLe.mowk\",\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"logo_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d887f61c-01d9-4916-9956-1ae15a8eab4a",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization\": {\n    \"name\": \"string\",\n    \"email\": \"LafnTHWB2d@xCnTiEahyCZyUoASvvVyXeLe.mowk\",\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"logo_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4cff04bc-bfb4-4df9-b476-1131e5e5a6c6",
+              "name": "Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization\": {\n    \"name\": \"string\",\n    \"email\": \"LafnTHWB2d@xCnTiEahyCZyUoASvvVyXeLe.mowk\",\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"logo_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dda87ed3-d83e-417b-a409-ca717a631c81",
+          "name": "Delete an organization",
+          "request": {
+            "name": "Delete an organization",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "organizations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "798d0c5e-db83-4efe-8511-06cb58180662",
+              "name": "Organization deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ecbdd882-b3ea-4d92-83cd-7a0a160f62ce",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "69f320fb-b34f-4869-baba-5b74026b81e6",
+              "name": "Forbidden - your credentials are correct, but you are not allowed to perform this action.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e7a55d9e-8e43-421a-9b6b-93caad4874c3",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "organizations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://files-api.dispatch.me",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "97d63bc4-ba67-440c-bbc3-a63e8bafdfef",
+    "name": "Dispatch Files API v1 Appointments Organizations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.\n\nContact Support:\n Name: Dispatch\n Email: sales@dispatch.me",
+      "type": "text/plain"
+    }
+  }
+}

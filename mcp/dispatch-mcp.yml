@@ -2,11 +2,10 @@ generated: '2026-07-20'
 method: derived
 status: candidate
 source: openapi/dispatch-rest-v3-openapi.yml
-summary: >-
-  Dispatch publishes no hosted or remote MCP server - none was found in the company's
-  GitHub organization, its documentation, or the public MCP registries. The tool list
-  below is a candidate surface derived one-to-one from the operations in the generated
-  OpenAPI, for anyone standing up an MCP server in front of the Dispatch REST API v3.
+summary: Dispatch publishes no hosted or remote MCP server - none was found in the company's GitHub organization,
+  its documentation, or the public MCP registries. The tool list below is a candidate surface derived
+  one-to-one from the operations in the generated OpenAPI, for anyone standing up an MCP server in front
+  of the Dispatch REST API v3.
 server:
   name: dispatch
   transport: stdio
@@ -14,22 +13,16 @@ server:
   published: false
 auth:
   model: oauth2-bearer
-  note: >-
-    A server would exchange a Dispatch public/secret key pair for a bearer token at
-    POST /v3/oauth/token and refresh on 401. Point it at https://api-sandbox.dispatch.me
-    while developing.
+  note: A server would exchange a Dispatch public/secret key pair for a bearer token at POST /v3/oauth/token
+    and refresh on 401. Point it at https://api-sandbox.dispatch.me while developing.
   detail: authentication/dispatch-authentication.yml
 safety_notes:
-- >-
-  Write operations affect real dispatched field work - creating or canceling a work order
-  offers or withdraws a job from a live service provider. Gate create/update/cancel/delete
-  tools behind confirmation.
-- >-
-  Dispatch documents no idempotency key, so a retried write is not safe to replay. Use the
-  external_ids field to correlate caller-side records instead.
-- >-
-  Delete on users is a deactivation and is reversible via reactivateUser; delete on
-  appointments, brands, customers and organizations is not documented as reversible.
+- Write operations affect real dispatched field work - creating or canceling a work order offers or withdraws
+  a job from a live service provider. Gate create/update/cancel/delete tools behind confirmation.
+- Dispatch documents no idempotency key, so a retried write is not safe to replay. Use the external_ids
+  field to correlate caller-side records instead.
+- Delete on users is a deactivation and is reversible via reactivateUser; delete on appointments, brands,
+  customers and organizations is not documented as reversible.
 tools:
 - name: list_jobs
   description: List jobs, filtered by brand, source, customer, organization, status or external ID.
@@ -68,7 +61,8 @@ tools:
   read_only: false
   source_operation: openapi/dispatch-rest-v3-openapi.yml#updateJobContact
 - name: list_appointments
-  description: List appointments, filtered by job, organization, technician, status or scheduled time range.
+  description: List appointments, filtered by job, organization, technician, status or scheduled time
+    range.
   read_only: true
   source_operation: openapi/dispatch-rest-v3-openapi.yml#listAppointments
 - name: get_appointment
@@ -176,9 +170,8 @@ tools:
   read_only: true
   source_operation: openapi/dispatch-rest-v3-openapi.yml#listSurveyResponses
 - name: create_work_order
-  description: >-
-    Create a work order - the recommended composite entry point that creates the job,
-    customer, organization and appointment windows and offers or assigns the work.
+  description: Create a work order - the recommended composite entry point that creates the job, customer,
+    organization and appointment windows and offers or assigns the work.
   read_only: false
   source_operation: openapi/dispatch-rest-v3-openapi.yml#createWorkOrder
 - name: update_work_order
@@ -197,3 +190,9 @@ tools:
   description: Retrieve a file by UID from the Dispatch Files API.
   read_only: true
   source_operation: openapi/dispatch-files-v1-openapi.yml#getDatafile
+deployment:
+  mode: none
+  verified: derived
+  tools: 41
+  checked: '2026-08-12'
+  source: catalog MCP census

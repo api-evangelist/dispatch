@@ -1,0 +1,203 @@
+{
+  "item": [
+    {
+      "id": "94a3a76a-fec6-465e-9908-3f430a1328aa",
+      "name": "Survey Responses",
+      "description": {
+        "content": "Customer surveys sent when an appointment or job completes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2447a085-71d2-4d6b-866c-63b7c430d711",
+          "name": "List survey responses",
+          "request": {
+            "name": "List survey responses",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "survey_responses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return. Maximum value is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Number of records to skip."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[job_id_eq]",
+                  "value": "<integer>",
+                  "description": "Survey responses for a specific job"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "562a8f89-11d4-4361-adc1-937d89d3433a",
+              "name": "A list of survey responses",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[job_id_eq]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"survey_responses\": [\n    {\n      \"job_id\": 8913,\n      \"appointment_id\": 281,\n      \"rating\": 3,\n      \"message\": \"string\"\n    },\n    {\n      \"job_id\": 4367,\n      \"appointment_id\": 2992,\n      \"rating\": 4,\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91040b7f-870c-485c-b88b-1e539b8b2e02",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "survey_responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[job_id_eq]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://files-api.dispatch.me",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "af897ec6-a610-44ba-8215-f0e932263db4",
+    "name": "Dispatch Files API v1 Appointments Survey Responses API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.\n\nContact Support:\n Name: Dispatch\n Email: sales@dispatch.me",
+      "type": "text/plain"
+    }
+  }
+}

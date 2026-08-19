@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dispatch Files API v1 Appointments Work Orders API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Work Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://files-api.dispatch.me/v3/work_orders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The recommended entry point. A work order carries all the information needed to create the job, customer, organization and appointment windows in one call, and selects an orchestration algorithm for offering or assigning the work."
+        },
+        {
+          "info": {
+            "name": "Update a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://files-api.dispatch.me/v3/work_orders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a work order"
+        },
+        {
+          "info": {
+            "name": "Cancel a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://files-api.dispatch.me/v3/work_orders/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Canceling cancels the job and the status of all child appointments."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

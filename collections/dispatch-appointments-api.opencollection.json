@@ -1,0 +1,194 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dispatch Files API v1 Appointments API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Appointments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List appointments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://files-api.dispatch.me/v3/appointments",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return. Maximum value is 100."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip."
+              },
+              {
+                "name": "filter[job_id_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Parent job ID"
+              },
+              {
+                "name": "filter[job_id_in]",
+                "value": "",
+                "type": "query",
+                "description": "Parent job IDs (comma separated)"
+              },
+              {
+                "name": "filter[organization_id_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Parent organization ID"
+              },
+              {
+                "name": "filter[status_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Appointments in a specific status"
+              },
+              {
+                "name": "filter[status_in]",
+                "value": "",
+                "type": "query",
+                "description": "Specific statuses (comma separated)"
+              },
+              {
+                "name": "filter[time_gt]",
+                "value": "",
+                "type": "query",
+                "description": "Appointments scheduled after the given ISO8601 time"
+              },
+              {
+                "name": "filter[time_gteq]",
+                "value": "",
+                "type": "query",
+                "description": "Appointments scheduled on or after the given ISO8601 time"
+              },
+              {
+                "name": "filter[time_lt]",
+                "value": "",
+                "type": "query",
+                "description": "Appointments scheduled before the given ISO8601 time"
+              },
+              {
+                "name": "filter[time_lteq]",
+                "value": "",
+                "type": "query",
+                "description": "Appointments scheduled on or before the given ISO8601 time"
+              },
+              {
+                "name": "filter[user_id_eq]",
+                "value": "",
+                "type": "query",
+                "description": "Appointments assigned to a particular technician"
+              },
+              {
+                "name": "filter[user_id_in]",
+                "value": "",
+                "type": "query",
+                "description": "Appointments assigned to technicians (comma separated)"
+              },
+              {
+                "name": "filter[user_id_null]",
+                "value": "",
+                "type": "query",
+                "description": "Show unassigned appointments (value should be true)"
+              }
+            ]
+          },
+          "docs": "List appointments"
+        },
+        {
+          "info": {
+            "name": "Create an appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://files-api.dispatch.me/v3/appointments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an appointment"
+        },
+        {
+          "info": {
+            "name": "View a single appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://files-api.dispatch.me/v3/appointments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "View a single appointment"
+        },
+        {
+          "info": {
+            "name": "Update an appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://files-api.dispatch.me/v3/appointments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Scheduling an appointment also moves its parent job to the \"scheduled\" status. Canceling a job cancels all of its child appointments."
+        },
+        {
+          "info": {
+            "name": "Delete an appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://files-api.dispatch.me/v3/appointments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an appointment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,943 @@
+{
+  "item": [
+    {
+      "id": "15cab942-e5c9-4130-95d5-d13edef21b72",
+      "name": "Customers",
+      "description": {
+        "content": "The homeowner or end customer a job belongs to.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1295b4d0-e2eb-4c2f-bd57-4c226cee20b3",
+          "name": "Create a customer",
+          "request": {
+            "name": "Create a customer",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "customers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer\": {\n    \"organization_id\": \"<integer>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"company_name\": \"<string>\",\n    \"notes\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"<string>\",\n        \"primary\": \"<boolean>\",\n        \"type\": \"<string>\"\n      },\n      {\n        \"number\": \"<string>\",\n        \"primary\": \"<boolean>\",\n        \"type\": \"<string>\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"street_2\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"street_2\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"external_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cf930d04-ea83-4669-b4cf-98890dcfc15a",
+              "name": "Customer created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"organization_id\": 735,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"notes\": \"string\",\n    \"email\": \"spa@EFFKubOxLeaOOWcaVtrb.nl\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      },\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customer\": {\n    \"organization_id\": 3838,\n    \"first_name\": \"string\",\n    \"id\": 8585,\n    \"last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"notes\": \"string\",\n    \"email\": \"ovh3n0Mxi@ZHpqrazJsZXQYKfwRMuSuhJcxGVbPyo.mx\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      },\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d8523ad-0ce3-47f8-a9a9-9b8c2f93ecd8",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"organization_id\": 735,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"notes\": \"string\",\n    \"email\": \"spa@EFFKubOxLeaOOWcaVtrb.nl\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      },\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8814991b-126a-4a64-9e3a-35c0d008de11",
+              "name": "Forbidden - your credentials are correct, but you are not allowed to perform this action.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"organization_id\": 735,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"notes\": \"string\",\n    \"email\": \"spa@EFFKubOxLeaOOWcaVtrb.nl\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      },\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1824a877-167d-4585-ad7d-f2eb19c41fc7",
+              "name": "Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"organization_id\": 735,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"notes\": \"string\",\n    \"email\": \"spa@EFFKubOxLeaOOWcaVtrb.nl\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      },\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3514ba87-c532-4007-837d-2b11816c268e",
+          "name": "List customers",
+          "request": {
+            "name": "List customers",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "customers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return. Maximum value is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Number of records to skip."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[email_eq]",
+                  "value": "<email>",
+                  "description": "Find a customer by email"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[external_id_contains]",
+                  "value": "<string>",
+                  "description": "Find a customer with a given external ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[organization_id_eq]",
+                  "value": "<integer>",
+                  "description": "Find customers for a specific organization"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8eb6e94c-e724-411a-85fa-9e311b632d3f",
+              "name": "A list of customers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[email_eq]",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "filter[external_id_contains]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[organization_id_eq]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customers\": [\n    {\n      \"organization_id\": 3794,\n      \"first_name\": \"string\",\n      \"id\": 1192,\n      \"last_name\": \"string\",\n      \"company_name\": \"string\",\n      \"notes\": \"string\",\n      \"email\": \"32UbO1OnlihDwx@GHiViQYpsOazCxQwdpTclajtapItpIGdT.pmm\",\n      \"phone_numbers\": [\n        {\n          \"number\": \"string\",\n          \"primary\": false,\n          \"type\": \"string\"\n        },\n        {\n          \"number\": \"string\",\n          \"primary\": true,\n          \"type\": \"string\"\n        }\n      ],\n      \"home_address\": {\n        \"street_1\": \"string\",\n        \"city\": \"string\",\n        \"street_2\": \"string\",\n        \"state\": \"string\",\n        \"postal_code\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"billing_address\": {\n        \"street_1\": \"string\",\n        \"city\": \"string\",\n        \"street_2\": \"string\",\n        \"state\": \"string\",\n        \"postal_code\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"external_ids\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"organization_id\": 5993,\n      \"first_name\": \"string\",\n      \"id\": 5829,\n      \"last_name\": \"string\",\n      \"company_name\": \"string\",\n      \"notes\": \"string\",\n      \"email\": \"EHF61ZqUyS@eBdnJwRoWoY.pfsl\",\n      \"phone_numbers\": [\n        {\n          \"number\": \"string\",\n          \"primary\": true,\n          \"type\": \"string\"\n        },\n        {\n          \"number\": \"string\",\n          \"primary\": true,\n          \"type\": \"string\"\n        }\n      ],\n      \"home_address\": {\n        \"street_1\": \"string\",\n        \"city\": \"string\",\n        \"street_2\": \"string\",\n        \"state\": \"string\",\n        \"postal_code\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"billing_address\": {\n        \"street_1\": \"string\",\n        \"city\": \"string\",\n        \"street_2\": \"string\",\n        \"state\": \"string\",\n        \"postal_code\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"external_ids\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "253e33a6-e0f3-4c94-8b3e-37f3956dc04a",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[email_eq]",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "filter[external_id_contains]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[organization_id_eq]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ef465d1-95dc-42dc-97cc-8e65306a80ff",
+          "name": "Update a customer",
+          "request": {
+            "name": "Update a customer",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "customers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer\": {\n    \"organization_id\": \"<integer>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"company_name\": \"<string>\",\n    \"notes\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"<string>\",\n        \"primary\": \"<boolean>\",\n        \"type\": \"<string>\"\n      },\n      {\n        \"number\": \"<string>\",\n        \"primary\": \"<boolean>\",\n        \"type\": \"<string>\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"street_2\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"street_2\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"external_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "045278b3-52ae-4dd4-9c13-59858bc3bdd0",
+              "name": "The updated customer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"organization_id\": 735,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"notes\": \"string\",\n    \"email\": \"spa@EFFKubOxLeaOOWcaVtrb.nl\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      },\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customer\": {\n    \"organization_id\": 3838,\n    \"first_name\": \"string\",\n    \"id\": 8585,\n    \"last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"notes\": \"string\",\n    \"email\": \"ovh3n0Mxi@ZHpqrazJsZXQYKfwRMuSuhJcxGVbPyo.mx\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      },\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c836e490-3280-4c2c-92ec-035f51433a34",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"organization_id\": 735,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"notes\": \"string\",\n    \"email\": \"spa@EFFKubOxLeaOOWcaVtrb.nl\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      },\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cb314821-a27a-437e-9bb8-aa029c281870",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"organization_id\": 735,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"notes\": \"string\",\n    \"email\": \"spa@EFFKubOxLeaOOWcaVtrb.nl\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      },\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d936f626-74e9-4d0e-b1d0-782d1c4f352a",
+              "name": "Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"organization_id\": 735,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"company_name\": \"string\",\n    \"notes\": \"string\",\n    \"email\": \"spa@EFFKubOxLeaOOWcaVtrb.nl\",\n    \"phone_numbers\": [\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      },\n      {\n        \"number\": \"string\",\n        \"primary\": true,\n        \"type\": \"string\"\n      }\n    ],\n    \"home_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"billing_address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"external_ids\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1932748f-737f-4caf-be67-f9278ef7aab5",
+          "name": "Delete a customer",
+          "request": {
+            "name": "Delete a customer",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "customers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5a4aee1f-193b-4556-ad90-44774a5ca69a",
+              "name": "Customer deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f6fb4b26-bd8f-4826-b687-08597b6c16cd",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f2200a12-f7bc-47dd-837f-0edeee635678",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "customers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://files-api.dispatch.me",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c9b2a0f0-4c82-4d19-ab2b-7e157227c68e",
+    "name": "Dispatch Files API v1 Appointments Customers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.\n\nContact Support:\n Name: Dispatch\n Email: sales@dispatch.me",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1556 @@
+{
+  "item": [
+    {
+      "id": "b03c3f20-f806-4bba-8506-06398a6c91c1",
+      "name": "Appointments",
+      "description": {
+        "content": "Scheduled times at which an assigned technician performs work for a job.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3d93a08a-375c-43df-99a3-bdc53030882e",
+          "name": "Create an appointment",
+          "request": {
+            "name": "Create an appointment",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "appointments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appointment\": {\n    \"job_id\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"duration\": \"<integer>\",\n    \"user_id\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa7b9392-57fe-4776-9321-8021eae309a4",
+              "name": "Appointment created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appointment\": {\n    \"job_id\": 1134,\n    \"status\": \"enroute\",\n    \"time\": \"2023-08-12T13:41:34.579Z\",\n    \"duration\": 7867,\n    \"user_id\": 5805\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"appointment\": {\n    \"job_id\": 3989,\n    \"status\": \"started\",\n    \"id\": 3617,\n    \"time\": \"1985-04-03T07:10:42.964Z\",\n    \"duration\": 7205,\n    \"user_id\": 7276\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b390ac49-3f56-4c60-92d0-d3703ad6c1f5",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appointment\": {\n    \"job_id\": 1134,\n    \"status\": \"enroute\",\n    \"time\": \"2023-08-12T13:41:34.579Z\",\n    \"duration\": 7867,\n    \"user_id\": 5805\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "248d1b6d-954d-4c9b-882d-2e358d42b597",
+              "name": "Forbidden - your credentials are correct, but you are not allowed to perform this action.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appointment\": {\n    \"job_id\": 1134,\n    \"status\": \"enroute\",\n    \"time\": \"2023-08-12T13:41:34.579Z\",\n    \"duration\": 7867,\n    \"user_id\": 5805\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c146829a-87c9-4870-94ee-55613fa046b9",
+              "name": "Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appointment\": {\n    \"job_id\": 1134,\n    \"status\": \"enroute\",\n    \"time\": \"2023-08-12T13:41:34.579Z\",\n    \"duration\": 7867,\n    \"user_id\": 5805\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "be08ce38-eb9d-4097-85c6-e41279fba62e",
+              "name": "Internal Server Error - Dispatch had a problem. Try again later.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appointment\": {\n    \"job_id\": 1134,\n    \"status\": \"enroute\",\n    \"time\": \"2023-08-12T13:41:34.579Z\",\n    \"duration\": 7867,\n    \"user_id\": 5805\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4187eb1-b9cf-48b8-9ecf-e98d7d6f36ba",
+          "name": "List appointments",
+          "request": {
+            "name": "List appointments",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "appointments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return. Maximum value is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Number of records to skip."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[job_id_eq]",
+                  "value": "<integer>",
+                  "description": "Parent job ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[job_id_in]",
+                  "value": "<string>",
+                  "description": "Parent job IDs (comma separated)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[organization_id_eq]",
+                  "value": "<integer>",
+                  "description": "Parent organization ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[status_eq]",
+                  "value": "<string>",
+                  "description": "Appointments in a specific status"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[status_in]",
+                  "value": "<string>",
+                  "description": "Specific statuses (comma separated)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[time_gt]",
+                  "value": "<dateTime>",
+                  "description": "Appointments scheduled after the given ISO8601 time"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[time_gteq]",
+                  "value": "<dateTime>",
+                  "description": "Appointments scheduled on or after the given ISO8601 time"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[time_lt]",
+                  "value": "<dateTime>",
+                  "description": "Appointments scheduled before the given ISO8601 time"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[time_lteq]",
+                  "value": "<dateTime>",
+                  "description": "Appointments scheduled on or before the given ISO8601 time"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[user_id_eq]",
+                  "value": "<integer>",
+                  "description": "Appointments assigned to a particular technician"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[user_id_in]",
+                  "value": "<string>",
+                  "description": "Appointments assigned to technicians (comma separated)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[user_id_null]",
+                  "value": "<boolean>",
+                  "description": "Show unassigned appointments (value should be true)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4fb38f1a-2bc0-433e-aff6-cf60a54bc3ce",
+              "name": "A list of appointments",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[job_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[job_id_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[organization_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[status_eq]",
+                      "value": "started"
+                    },
+                    {
+                      "key": "filter[status_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[time_gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_gteq]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_lt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_lteq]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[user_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[user_id_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[user_id_null]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"appointments\": [\n    {\n      \"job_id\": 7581,\n      \"status\": \"draft\",\n      \"id\": 7545,\n      \"time\": \"1989-04-13T23:28:27.311Z\",\n      \"duration\": 336,\n      \"user_id\": 3183\n    },\n    {\n      \"job_id\": 7511,\n      \"status\": \"canceled\",\n      \"id\": 8295,\n      \"time\": \"2019-11-06T02:44:49.070Z\",\n      \"duration\": 5273,\n      \"user_id\": 6395\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6d7d016-fa3c-4ba0-8bc9-97cbf8088f3f",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[job_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[job_id_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[organization_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[status_eq]",
+                      "value": "started"
+                    },
+                    {
+                      "key": "filter[status_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[time_gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_gteq]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_lt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_lteq]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[user_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[user_id_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[user_id_null]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "03fceeb4-2ef1-449d-a056-5a164d9899f7",
+              "name": "Forbidden - your credentials are correct, but you are not allowed to perform this action.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[job_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[job_id_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[organization_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[status_eq]",
+                      "value": "started"
+                    },
+                    {
+                      "key": "filter[status_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[time_gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_gteq]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_lt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_lteq]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[user_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[user_id_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[user_id_null]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3e74e355-7b7c-4235-871b-daf822b0fa6e",
+              "name": "Internal Server Error - Dispatch had a problem. Try again later.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[job_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[job_id_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[organization_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[status_eq]",
+                      "value": "started"
+                    },
+                    {
+                      "key": "filter[status_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[time_gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_gteq]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_lt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[time_lteq]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[user_id_eq]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[user_id_in]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[user_id_null]",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "daabf49e-7a3e-4dd3-aad5-4a56b8d05e3d",
+          "name": "View a single appointment",
+          "request": {
+            "name": "View a single appointment",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "appointments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1e86f3ab-03c0-4e36-8138-00d26dcde7c5",
+              "name": "The appointment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"appointment\": {\n    \"job_id\": 3989,\n    \"status\": \"started\",\n    \"id\": 3617,\n    \"time\": \"1985-04-03T07:10:42.964Z\",\n    \"duration\": 7205,\n    \"user_id\": 7276\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78db3642-9ec4-413f-9ac7-73df38418363",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b3ed85ad-cfd6-48e5-bf95-5539a0ee1d8a",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e22ea75-6ef2-489e-ba09-68076835e218",
+          "name": "Update an appointment",
+          "request": {
+            "name": "Update an appointment",
+            "description": {
+              "content": "Scheduling an appointment also moves its parent job to the \"scheduled\" status. Canceling a job cancels all of its child appointments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "appointments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appointment\": {\n    \"job_id\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"time\": \"<dateTime>\",\n    \"duration\": \"<integer>\",\n    \"user_id\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1143059b-30aa-43dd-9d4c-c8da133b1ff6",
+              "name": "The updated appointment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appointment\": {\n    \"job_id\": 1134,\n    \"status\": \"enroute\",\n    \"time\": \"2023-08-12T13:41:34.579Z\",\n    \"duration\": 7867,\n    \"user_id\": 5805\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"appointment\": {\n    \"job_id\": 3989,\n    \"status\": \"started\",\n    \"id\": 3617,\n    \"time\": \"1985-04-03T07:10:42.964Z\",\n    \"duration\": 7205,\n    \"user_id\": 7276\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32992c2b-9291-4a33-936f-4e78f470c13f",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appointment\": {\n    \"job_id\": 1134,\n    \"status\": \"enroute\",\n    \"time\": \"2023-08-12T13:41:34.579Z\",\n    \"duration\": 7867,\n    \"user_id\": 5805\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c53d587d-0037-4059-bb0e-283abde93e79",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appointment\": {\n    \"job_id\": 1134,\n    \"status\": \"enroute\",\n    \"time\": \"2023-08-12T13:41:34.579Z\",\n    \"duration\": 7867,\n    \"user_id\": 5805\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9c0fe2be-b924-497b-aae3-7ff8888d6117",
+              "name": "Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appointment\": {\n    \"job_id\": 1134,\n    \"status\": \"enroute\",\n    \"time\": \"2023-08-12T13:41:34.579Z\",\n    \"duration\": 7867,\n    \"user_id\": 5805\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d13e1868-69cb-482c-94f6-cd379267bf1d",
+          "name": "Delete an appointment",
+          "request": {
+            "name": "Delete an appointment",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "appointments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d4af1ded-2cba-421d-8351-9c730a9d44db",
+              "name": "Appointment deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c395029b-6436-4b4c-9e75-827c60001b12",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4a4bdf6c-a417-446e-8bc6-c15a2683f3b9",
+              "name": "Forbidden - your credentials are correct, but you are not allowed to perform this action.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "033ea230-bdcd-4682-a889-7984ab700f63",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "appointments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://files-api.dispatch.me",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "04089ee9-ff59-4733-928a-123c7ed40c8d",
+    "name": "Dispatch Files API v1 Appointments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.\n\nContact Support:\n Name: Dispatch\n Email: sales@dispatch.me",
+      "type": "text/plain"
+    }
+  }
+}

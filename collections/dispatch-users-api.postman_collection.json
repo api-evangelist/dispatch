@@ -1,0 +1,1315 @@
+{
+  "item": [
+    {
+      "id": "798c4819-0b59-458c-b791-5531919372a1",
+      "name": "Users",
+      "description": {
+        "content": "Dispatchers and technicians using the Dispatch applications.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "45fe9665-0dae-447f-a5b4-cab84ad00c74",
+          "name": "Create a user",
+          "request": {
+            "name": "Create a user",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": {\n    \"organization_id\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"address\": {\n      \"street_1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"street_2\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"phone_number\": \"<string>\",\n    \"email\": \"<email>\",\n    \"photo_token\": \"<string>\",\n    \"password\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "77c00bbe-6792-4895-a8cb-211042f6c387",
+              "name": "User created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": {\n    \"organization_id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"roles\": [\n      \"technician\",\n      \"dispatcher\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"email\": \"AzwIq1cNvGPwbwq@SkqQFhFTdWwlmmJKUzbIntDDCUYzhMmm.it\",\n    \"photo_token\": \"string\",\n    \"password\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user\": {\n    \"organization_id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"roles\": [\n      \"dispatcher\",\n      \"dispatcher\"\n    ],\n    \"id\": 9105,\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"email\": \"5zlpuCu@tAlPUtBmpvelLFXfxsrCfQAwFKI.uja\",\n    \"photo_token\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb71c3f4-ad7a-40d2-ad4c-14a1dbcd9ecb",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": {\n    \"organization_id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"roles\": [\n      \"technician\",\n      \"dispatcher\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"email\": \"AzwIq1cNvGPwbwq@SkqQFhFTdWwlmmJKUzbIntDDCUYzhMmm.it\",\n    \"photo_token\": \"string\",\n    \"password\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dac8fd50-9266-426b-9b4f-71a0c57ed3a2",
+              "name": "Forbidden - your credentials are correct, but you are not allowed to perform this action.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": {\n    \"organization_id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"roles\": [\n      \"technician\",\n      \"dispatcher\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"email\": \"AzwIq1cNvGPwbwq@SkqQFhFTdWwlmmJKUzbIntDDCUYzhMmm.it\",\n    \"photo_token\": \"string\",\n    \"password\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c4d49f45-7c5d-4d7d-9888-9d6e35a9e005",
+              "name": "Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": {\n    \"organization_id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"roles\": [\n      \"technician\",\n      \"dispatcher\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"email\": \"AzwIq1cNvGPwbwq@SkqQFhFTdWwlmmJKUzbIntDDCUYzhMmm.it\",\n    \"photo_token\": \"string\",\n    \"password\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "408e542d-fa50-4271-9e99-9f42a750b388",
+          "name": "List users",
+          "request": {
+            "name": "List users",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return. Maximum value is 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Number of records to skip."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[by_user_roles]",
+                  "value": "<string>",
+                  "description": "Search for users in the provided role(s)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[email_eq]",
+                  "value": "<email>",
+                  "description": "Search for users by email"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[organization_id_eq]",
+                  "value": "<integer>",
+                  "description": "Search for users in a specific organization"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef5911c0-0f7f-4c66-89b4-0bf57945bfe9",
+              "name": "A list of users",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[by_user_roles]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[email_eq]",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "filter[organization_id_eq]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"users\": [\n    {\n      \"organization_id\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"roles\": [\n        \"dispatcher\",\n        \"dispatcher\"\n      ],\n      \"id\": 3712,\n      \"address\": {\n        \"street_1\": \"string\",\n        \"city\": \"string\",\n        \"street_2\": \"string\",\n        \"state\": \"string\",\n        \"postal_code\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"phone_number\": \"string\",\n      \"email\": \"Of0YQf91DOGCODw@kKTratNKggFWSZJupKdkEf.ph\",\n      \"photo_token\": \"string\"\n    },\n    {\n      \"organization_id\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"roles\": [\n        \"dispatcher\",\n        \"dispatcher\"\n      ],\n      \"id\": 8931,\n      \"address\": {\n        \"street_1\": \"string\",\n        \"city\": \"string\",\n        \"street_2\": \"string\",\n        \"state\": \"string\",\n        \"postal_code\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"phone_number\": \"string\",\n      \"email\": \"RAMXciUo5l@nlDljMEfBqdzjKEvTbCaHuEfBU.yt\",\n      \"photo_token\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "579d66a4-4a10-492a-b636-b8ada6eb9450",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[by_user_roles]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[email_eq]",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "filter[organization_id_eq]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3c182ad-a792-4c41-b965-5f03c2ac2943",
+          "name": "View a single user",
+          "request": {
+            "name": "View a single user",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b3be7f12-f8db-4b61-a5fc-cef49089583a",
+              "name": "The user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user\": {\n    \"organization_id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"roles\": [\n      \"dispatcher\",\n      \"dispatcher\"\n    ],\n    \"id\": 9105,\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"email\": \"5zlpuCu@tAlPUtBmpvelLFXfxsrCfQAwFKI.uja\",\n    \"photo_token\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0cf87738-057c-4078-af7a-bd302413ca0f",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e92beaa3-b9b2-49bd-bf27-aad0bfc3849f",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35185c80-6031-4002-9487-2fe689b9bd1c",
+          "name": "Update a user",
+          "request": {
+            "name": "Update a user",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": {\n    \"organization_id\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"roles\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"address\": {\n      \"street_1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"street_2\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postal_code\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"phone_number\": \"<string>\",\n    \"email\": \"<email>\",\n    \"photo_token\": \"<string>\",\n    \"password\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6ddfbf7d-153e-440a-9107-42096eb98b3d",
+              "name": "The updated user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": {\n    \"organization_id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"roles\": [\n      \"technician\",\n      \"dispatcher\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"email\": \"AzwIq1cNvGPwbwq@SkqQFhFTdWwlmmJKUzbIntDDCUYzhMmm.it\",\n    \"photo_token\": \"string\",\n    \"password\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bf23ef9b-b23a-42db-b04c-878d492f9526",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": {\n    \"organization_id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"roles\": [\n      \"technician\",\n      \"dispatcher\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"email\": \"AzwIq1cNvGPwbwq@SkqQFhFTdWwlmmJKUzbIntDDCUYzhMmm.it\",\n    \"photo_token\": \"string\",\n    \"password\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3dcca703-ae69-439e-af5b-807d893292d4",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": {\n    \"organization_id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"roles\": [\n      \"technician\",\n      \"dispatcher\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"email\": \"AzwIq1cNvGPwbwq@SkqQFhFTdWwlmmJKUzbIntDDCUYzhMmm.it\",\n    \"photo_token\": \"string\",\n    \"password\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "23194bbb-603d-4af5-a1c4-f315ee09023b",
+              "name": "Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": {\n    \"organization_id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"roles\": [\n      \"technician\",\n      \"dispatcher\"\n    ],\n    \"address\": {\n      \"street_1\": \"string\",\n      \"city\": \"string\",\n      \"street_2\": \"string\",\n      \"state\": \"string\",\n      \"postal_code\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"phone_number\": \"string\",\n    \"email\": \"AzwIq1cNvGPwbwq@SkqQFhFTdWwlmmJKUzbIntDDCUYzhMmm.it\",\n    \"photo_token\": \"string\",\n    \"password\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "10b073ab-8e56-4aca-916b-817659255c8c",
+          "name": "Delete / deactivate a user",
+          "request": {
+            "name": "Delete / deactivate a user",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0fec67e9-d553-4e69-8281-45c5d5d25b60",
+              "name": "User deactivated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "39ff1378-c8db-4e45-943a-0098be0511bd",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cb4154a1-5e5a-49b5-bf66-ed2b1358d8c4",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed8302a4-a90a-4bf1-b9a7-8c0303ca69b0",
+          "name": "Reactivate a user",
+          "request": {
+            "name": "Reactivate a user",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "users",
+                ":id",
+                "restore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e7b7517d-02e5-47f6-bef0-82c59dec8ecc",
+              "name": "User reactivated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b02fccf7-ef37-4f5a-8cb8-154f6e66bbbf",
+              "name": "Unauthorized - your OAuth2 bearer token is incorrect or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1bb6a51f-9f02-4854-a7f4-74a9b81fc5da",
+              "name": "Not Found - requested resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "users",
+                    ":id",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://files-api.dispatch.me",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b2caa3d3-07f3-4ea3-b8a5-3ce051204395",
+    "name": "Dispatch Files API v1 Appointments Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.\n\nContact Support:\n Name: Dispatch\n Email: sales@dispatch.me",
+      "type": "text/plain"
+    }
+  }
+}
