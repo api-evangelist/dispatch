@@ -171,6 +171,8 @@ apis:
   humanURL: https://github.com/DispatchMe/v3-api-docs
   baseURL: https://api.dispatch.me
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -194,6 +196,8 @@ apis:
   humanURL: https://github.com/DispatchMe/v3-api-docs
   baseURL: https://api.dispatch.me
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -217,6 +221,8 @@ apis:
   humanURL: https://github.com/DispatchMe/v3-api-docs
   baseURL: https://api.dispatch.me
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -286,6 +292,8 @@ apis:
   humanURL: https://github.com/DispatchMe/v3-api-docs
   baseURL: https://api.dispatch.me
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
