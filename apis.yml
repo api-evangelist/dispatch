@@ -12,6 +12,18 @@ description: >-
   manufacturers, and to service enterprises running first-party branch networks. The API
   is secured with OAuth 2.0 bearer tokens, offers a full sandbox environment, and is
   documented in a public GitHub repository.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
