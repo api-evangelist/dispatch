@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Dispatch API v1 Appointments Files API
+  title: Dispatch API v1 Files API
   version: '1'
   summary: Upload and retrieve photos and other files shared with service providers and customers.
   description: The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.

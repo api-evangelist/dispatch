@@ -1,24 +1,15 @@
 {
   "provider": "dispatch",
   "sources": [
-    "dispatch-appointments-api-openapi.yml",
-    "dispatch-authentication-api-openapi.yml",
-    "dispatch-brands-api-openapi.yml",
-    "dispatch-customers-api-openapi.yml",
-    "dispatch-files-api-openapi.yml",
-    "dispatch-jobs-api-openapi.yml",
-    "dispatch-organizations-api-openapi.yml",
-    "dispatch-sources-api-openapi.yml",
-    "dispatch-survey-responses-api-openapi.yml",
-    "dispatch-users-api-openapi.yml",
-    "dispatch-work-orders-api-openapi.yml"
+    "_original/dispatch-files-v1-openapi.yml",
+    "_original/dispatch-rest-v3-openapi.yml"
   ],
   "outputs": [
+    "dispatch-files-api-openapi.yml",
     "dispatch-appointments-api-openapi.yml",
     "dispatch-authentication-api-openapi.yml",
     "dispatch-brands-api-openapi.yml",
     "dispatch-customers-api-openapi.yml",
-    "dispatch-files-api-openapi.yml",
     "dispatch-jobs-api-openapi.yml",
     "dispatch-organizations-api-openapi.yml",
     "dispatch-sources-api-openapi.yml",
@@ -29,6 +20,22 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "dispatch-files-v1-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dispatch-rest-v3-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0"
+  ],
+  "skipped": [
+    "dispatch-appointments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dispatch-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dispatch-brands-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dispatch-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dispatch-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dispatch-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dispatch-organizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dispatch-sources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dispatch-survey-responses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dispatch-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dispatch-work-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

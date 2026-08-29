@@ -1,17 +1,18 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Dispatch Files API v1 Appointments Work Orders API
-  version: '1'
-  summary: Upload and retrieve photos and other files shared with service providers and customers.
-  description: The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.
+  title: Dispatch REST API v3 Work Orders API
+  version: '3'
+  summary: Field-service orchestration API for jobs, customers, organizations, appointments and work orders.
+  description: The Dispatch REST API lets job sources (warranty companies, equipment manufacturers, lead-generation platforms) and service enterprises interact with Dispatch's core business objects to implement their service workflow on the Dispatch platform. Job sources authenticate with OAuth 2.0 client credentials; individual service providers authenticate with the resource-owner password grant.
   contact:
     name: Dispatch
     url: https://dispatch.me/contact
     email: sales@dispatch.me
+  x-documentation: https://github.com/DispatchMe/v3-api-docs
 servers:
-- url: https://files-api.dispatch.me
+- url: https://api.dispatch.me
   description: Production
-- url: https://files-api-sandbox.dispatch.me
+- url: https://api-sandbox.dispatch.me
   description: Sandbox
 security:
 - bearerAuth: []
@@ -82,38 +83,15 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ContactMethod:
+    AppointmentWindow:
       type: object
       properties:
-        label:
+        start_time:
           type: string
-          description: 'For example: mobile, work'
-        value:
+          format: date-time
+        end_time:
           type: string
-        preferred:
-          type: boolean
-    Location:
-      type: object
-      description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
-      required:
-      - street_1
-      - city
-      properties:
-        street_1:
-          type: string
-        street_2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-          description: Two-character state/province abbreviation
-        postal_code:
-          type: string
-          description: 5-digit US or 6-character Canadian postal code
-        timezone:
-          type: string
-          description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
+          format: date-time
     Organization:
       type: object
       required:
@@ -140,15 +118,44 @@ components:
         logo_token:
           type: string
           description: Token for the organization logo in the Dispatch file system
-    AppointmentWindow:
+    Contact:
       type: object
       properties:
-        start_time:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
           type: string
-          format: date-time
-        end_time:
+        last_name:
           type: string
-          format: date-time
+        company_name:
+          type: string
+        external_id:
+          type: string
+        primary:
+          type: boolean
+        notes:
+          type: string
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        email_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        billing_address:
+          $ref: '#/components/schemas/Location'
+    ContactMethod:
+      type: object
+      properties:
+        label:
+          type: string
+          description: 'For example: mobile, work'
+        value:
+          type: string
+        preferred:
+          type: boolean
     WorkOrder:
       type: object
       description: The recommended integration surface - carries everything needed to create a job, its customer, its organization and appointment windows in one request.
@@ -191,34 +198,28 @@ components:
       enum:
       - direct_offer
       - direct_assign
-    Contact:
+    Location:
       type: object
+      description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
+      required:
+      - street_1
+      - city
       properties:
-        id:
-          type: integer
-          readOnly: true
-        first_name:
+        street_1:
           type: string
-        last_name:
+        street_2:
           type: string
-        company_name:
+        city:
           type: string
-        external_id:
+        state:
           type: string
-        primary:
-          type: boolean
-        notes:
+          description: Two-character state/province abbreviation
+        postal_code:
           type: string
-        phone_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactMethod'
-        email_addresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactMethod'
-        billing_address:
-          $ref: '#/components/schemas/Location'
+          description: 5-digit US or 6-character Canadian postal code
+        timezone:
+          type: string
+          description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
   parameters:
     id:
       name: id
@@ -227,21 +228,33 @@ components:
       schema:
         type: integer
   responses:
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
     NotFound:
       description: Not Found - requested resource could not be found.
-    Forbidden:
-      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
     UnprocessableEntity:
       description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-      description: OAuth 2.0 bearer token obtained from the core API at POST /v3/oauth/token.
+      description: OAuth 2.0 bearer token obtained from POST /v3/oauth/token. Tokens are temporary (expires_in is returned with the token) and must be refreshed on 401.
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0. Job sources use client_credentials; individual service providers use the resource-owner password grant. Dispatch does not document a scope vocabulary - access is governed by an account-level ACL agreed with the account manager.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.dispatch.me/v3/oauth/token
+          refreshUrl: https://api.dispatch.me/v3/oauth/token
+          scopes: {}
+        password:
+          tokenUrl: https://api.dispatch.me/v3/oauth/token
+          refreshUrl: https://api.dispatch.me/v3/oauth/token
+          scopes: {}
 x-apievangelist:
   generated: '2026-07-20'
   method: generated
-  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
-  note: Generated from the "Files and Photos" section of Dispatch's public REST API v3 documentation. The Files API is served from a different host than the core API.
+  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  note: Dispatch publishes no machine-readable specification. This document was generated faithfully from the provider's own public REST API v3 documentation repository (DispatchMe/v3-api-docs, a public Slate docs site). Paths, methods, entity attributes, query parameters, statuses and error codes are transcribed from that source. Nothing was invented. Where the docs describe a list operation in prose without printing the endpoint line, the operation is flagged with x-path-inferred.

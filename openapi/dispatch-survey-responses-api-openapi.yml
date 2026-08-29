@@ -1,17 +1,18 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Dispatch Files API v1 Appointments Survey Responses API
-  version: '1'
-  summary: Upload and retrieve photos and other files shared with service providers and customers.
-  description: The Dispatch Files API stores photos and other files associated with a job, and is served from a host distinct from the core Dispatch REST API. Files are uploaded as multipart/form-data and retrieved by UID, which redirects to the stored object.
+  title: Dispatch REST API v3 Survey Responses API
+  version: '3'
+  summary: Field-service orchestration API for jobs, customers, organizations, appointments and work orders.
+  description: The Dispatch REST API lets job sources (warranty companies, equipment manufacturers, lead-generation platforms) and service enterprises interact with Dispatch's core business objects to implement their service workflow on the Dispatch platform. Job sources authenticate with OAuth 2.0 client credentials; individual service providers authenticate with the resource-owner password grant.
   contact:
     name: Dispatch
     url: https://dispatch.me/contact
     email: sales@dispatch.me
+  x-documentation: https://github.com/DispatchMe/v3-api-docs
 servers:
-- url: https://files-api.dispatch.me
+- url: https://api.dispatch.me
   description: Production
-- url: https://files-api-sandbox.dispatch.me
+- url: https://api-sandbox.dispatch.me
   description: Sandbox
 security:
 - bearerAuth: []
@@ -68,6 +69,9 @@ components:
         message:
           type: string
           description: Additional feedback from the customer
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
   parameters:
     offset:
       name: offset
@@ -83,16 +87,25 @@ components:
       schema:
         type: integer
         maximum: 100
-  responses:
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-      description: OAuth 2.0 bearer token obtained from the core API at POST /v3/oauth/token.
+      description: OAuth 2.0 bearer token obtained from POST /v3/oauth/token. Tokens are temporary (expires_in is returned with the token) and must be refreshed on 401.
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0. Job sources use client_credentials; individual service providers use the resource-owner password grant. Dispatch does not document a scope vocabulary - access is governed by an account-level ACL agreed with the account manager.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.dispatch.me/v3/oauth/token
+          refreshUrl: https://api.dispatch.me/v3/oauth/token
+          scopes: {}
+        password:
+          tokenUrl: https://api.dispatch.me/v3/oauth/token
+          refreshUrl: https://api.dispatch.me/v3/oauth/token
+          scopes: {}
 x-apievangelist:
   generated: '2026-07-20'
   method: generated
-  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
-  note: Generated from the "Files and Photos" section of Dispatch's public REST API v3 documentation. The Files API is served from a different host than the core API.
+  source: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md
+  note: Dispatch publishes no machine-readable specification. This document was generated faithfully from the provider's own public REST API v3 documentation repository (DispatchMe/v3-api-docs, a public Slate docs site). Paths, methods, entity attributes, query parameters, statuses and error codes are transcribed from that source. Nothing was invented. Where the docs describe a list operation in prose without printing the endpoint line, the operation is flagged with x-path-inferred.
