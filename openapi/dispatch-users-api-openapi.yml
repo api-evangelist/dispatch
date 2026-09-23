@@ -162,20 +162,16 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
   parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: integer
-    offset:
-      name: offset
-      in: query
-      description: Number of records to skip.
-      schema:
-        type: integer
-        minimum: 0
     limit:
       name: limit
       in: query
@@ -183,7 +179,42 @@ components:
       schema:
         type: integer
         maximum: 100
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
   schemas:
+    Location:
+      type: object
+      description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
+      required:
+      - street_1
+      - city
+      properties:
+        street_1:
+          type: string
+        street_2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+          description: Two-character state/province abbreviation
+        postal_code:
+          type: string
+          description: 5-digit US or 6-character Canadian postal code
+        timezone:
+          type: string
+          description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
     User:
       type: object
       required:
@@ -225,37 +256,6 @@ components:
           type: string
           writeOnly: true
           description: Only used for creation and updating. Never returned on GET.
-    Location:
-      type: object
-      description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
-      required:
-      - street_1
-      - city
-      properties:
-        street_1:
-          type: string
-        street_2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-          description: Two-character state/province abbreviation
-        postal_code:
-          type: string
-          description: 5-digit US or 6-character Canadian postal code
-        timezone:
-          type: string
-          description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
-  responses:
-    NotFound:
-      description: Not Found - requested resource could not be found.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    UnprocessableEntity:
-      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
-    Forbidden:
-      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   securitySchemes:
     bearerAuth:
       type: http

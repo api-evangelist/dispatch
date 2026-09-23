@@ -211,7 +211,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    InternalServerError:
+      description: Internal Server Error - Dispatch had a problem. Try again later.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   parameters:
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of records to return. Maximum value is 100.
+      schema:
+        type: integer
+        maximum: 100
     offset:
       name: offset
       in: query
@@ -225,24 +243,7 @@ components:
       required: true
       schema:
         type: integer
-    limit:
-      name: limit
-      in: query
-      description: Maximum number of records to return. Maximum value is 100.
-      schema:
-        type: integer
-        maximum: 100
   schemas:
-    AppointmentStatus:
-      type: string
-      description: Appointments move freely between statuses. Technicians update status from the mobile app.
-      enum:
-      - draft
-      - scheduled
-      - enroute
-      - started
-      - complete
-      - canceled
     Appointment:
       type: object
       required:
@@ -267,17 +268,16 @@ components:
           description: ID of the assigned technician
         status:
           $ref: '#/components/schemas/AppointmentStatus'
-  responses:
-    NotFound:
-      description: Not Found - requested resource could not be found.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    UnprocessableEntity:
-      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
-    Forbidden:
-      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
-    InternalServerError:
-      description: Internal Server Error - Dispatch had a problem. Try again later.
+    AppointmentStatus:
+      type: string
+      description: Appointments move freely between statuses. Technicians update status from the mobile app.
+      enum:
+      - draft
+      - scheduled
+      - enroute
+      - started
+      - complete
+      - canceled
   securitySchemes:
     bearerAuth:
       type: http

@@ -83,79 +83,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    AppointmentWindow:
-      type: object
-      properties:
-        start_time:
-          type: string
-          format: date-time
-        end_time:
-          type: string
-          format: date-time
-    Organization:
-      type: object
-      required:
-      - name
-      - email
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-        external_ids:
-          type: array
-          items:
-            type: string
-        address:
-          $ref: '#/components/schemas/Location'
-        phone_number:
-          type: string
-          description: RFC 3966 format
-        email:
-          type: string
-          format: email
-        logo_token:
-          type: string
-          description: Token for the organization logo in the Dispatch file system
-    Contact:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        first_name:
-          type: string
-        last_name:
-          type: string
-        company_name:
-          type: string
-        external_id:
-          type: string
-        primary:
-          type: boolean
-        notes:
-          type: string
-        phone_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactMethod'
-        email_addresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactMethod'
-        billing_address:
-          $ref: '#/components/schemas/Location'
-    ContactMethod:
-      type: object
-      properties:
-        label:
-          type: string
-          description: 'For example: mobile, work'
-        value:
-          type: string
-        preferred:
-          type: boolean
     WorkOrder:
       type: object
       description: The recommended integration surface - carries everything needed to create a job, its customer, its organization and appointment windows in one request.
@@ -192,12 +119,51 @@ components:
           description: Organizations to send or offer the work to. In direct_* orchestration only a single organization is permitted.
           items:
             $ref: '#/components/schemas/Organization'
-    OrchestrationAlgorithm:
-      type: string
-      description: direct_offer offers the job to a single organization (job starts in offered status); direct_assign assigns the job to a single organization (job starts in unscheduled status).
-      enum:
-      - direct_offer
-      - direct_assign
+    AppointmentWindow:
+      type: object
+      properties:
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+    Organization:
+      type: object
+      required:
+      - name
+      - email
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        external_ids:
+          type: array
+          items:
+            type: string
+        address:
+          $ref: '#/components/schemas/Location'
+        phone_number:
+          type: string
+          description: RFC 3966 format
+        email:
+          type: string
+          format: email
+        logo_token:
+          type: string
+          description: Token for the organization logo in the Dispatch file system
+    ContactMethod:
+      type: object
+      properties:
+        label:
+          type: string
+          description: 'For example: mobile, work'
+        value:
+          type: string
+        preferred:
+          type: boolean
     Location:
       type: object
       description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
@@ -220,6 +186,49 @@ components:
         timezone:
           type: string
           description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company_name:
+          type: string
+        external_id:
+          type: string
+        primary:
+          type: boolean
+        notes:
+          type: string
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        email_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        billing_address:
+          $ref: '#/components/schemas/Location'
+    OrchestrationAlgorithm:
+      type: string
+      description: direct_offer offers the job to a single organization (job starts in offered status); direct_assign assigns the job to a single organization (job starts in unscheduled status).
+      enum:
+      - direct_offer
+      - direct_assign
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
   parameters:
     id:
       name: id
@@ -227,15 +236,6 @@ components:
       required: true
       schema:
         type: integer
-  responses:
-    NotFound:
-      description: Not Found - requested resource could not be found.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    UnprocessableEntity:
-      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
-    Forbidden:
-      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   securitySchemes:
     bearerAuth:
       type: http

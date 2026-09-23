@@ -49,6 +49,21 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of records to return. Maximum value is 100.
+      schema:
+        type: integer
+        maximum: 100
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
   schemas:
     SurveyResponse:
       type: object
@@ -72,21 +87,6 @@ components:
   responses:
     Unauthorized:
       description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-  parameters:
-    offset:
-      name: offset
-      in: query
-      description: Number of records to skip.
-      schema:
-        type: integer
-        minimum: 0
-    limit:
-      name: limit
-      in: query
-      description: Maximum number of records to return. Maximum value is 100.
-      schema:
-        type: integer
-        maximum: 100
   securitySchemes:
     bearerAuth:
       type: http

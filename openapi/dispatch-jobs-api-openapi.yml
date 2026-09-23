@@ -329,27 +329,15 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
-  parameters:
-    offset:
-      name: offset
-      in: query
-      description: Number of records to skip.
-      schema:
-        type: integer
-        minimum: 0
-    id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: integer
-    limit:
-      name: limit
-      in: query
-      description: Maximum number of records to return. Maximum value is 100.
-      schema:
-        type: integer
-        maximum: 100
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   schemas:
     AppointmentWindow:
       type: object
@@ -360,43 +348,6 @@ components:
         end_time:
           type: string
           format: date-time
-    JobStatus:
-      type: string
-      description: Jobs move freely between statuses.
-      enum:
-      - unscheduled
-      - scheduled
-      - paused
-      - complete
-      - canceled
-    Contact:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        first_name:
-          type: string
-        last_name:
-          type: string
-        company_name:
-          type: string
-        external_id:
-          type: string
-        primary:
-          type: boolean
-        notes:
-          type: string
-        phone_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactMethod'
-        email_addresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactMethod'
-        billing_address:
-          $ref: '#/components/schemas/Location'
     Organization:
       type: object
       required:
@@ -423,6 +374,53 @@ components:
         logo_token:
           type: string
           description: Token for the organization logo in the Dispatch file system
+    ContactMethod:
+      type: object
+      properties:
+        label:
+          type: string
+          description: 'For example: mobile, work'
+        value:
+          type: string
+        preferred:
+          type: boolean
+    Customer:
+      type: object
+      required:
+      - organization_id
+      - first_name
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        organization_id:
+          type: integer
+          description: ID of the parent organization
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company_name:
+          type: string
+        notes:
+          type: string
+        email:
+          type: string
+          format: email
+          description: Single email address per customer. Used for email notifications when configured.
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+        home_address:
+          $ref: '#/components/schemas/Location'
+        billing_address:
+          $ref: '#/components/schemas/Location'
+        external_ids:
+          type: array
+          items:
+            type: string
+          description: Your ID(s) for this customer. Available to job sources only.
     Job:
       type: object
       required:
@@ -483,53 +481,6 @@ components:
         status_message:
           type: string
           description: Optional qualifier for the current status
-    Customer:
-      type: object
-      required:
-      - organization_id
-      - first_name
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        organization_id:
-          type: integer
-          description: ID of the parent organization
-        first_name:
-          type: string
-        last_name:
-          type: string
-        company_name:
-          type: string
-        notes:
-          type: string
-        email:
-          type: string
-          format: email
-          description: Single email address per customer. Used for email notifications when configured.
-        phone_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/PhoneNumber'
-        home_address:
-          $ref: '#/components/schemas/Location'
-        billing_address:
-          $ref: '#/components/schemas/Location'
-        external_ids:
-          type: array
-          items:
-            type: string
-          description: Your ID(s) for this customer. Available to job sources only.
-    ContactMethod:
-      type: object
-      properties:
-        label:
-          type: string
-          description: 'For example: mobile, work'
-        value:
-          type: string
-        preferred:
-          type: boolean
     PhoneNumber:
       type: object
       properties:
@@ -564,15 +515,64 @@ components:
         timezone:
           type: string
           description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
-  responses:
-    NotFound:
-      description: Not Found - requested resource could not be found.
-    UnprocessableEntity:
-      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    Forbidden:
-      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company_name:
+          type: string
+        external_id:
+          type: string
+        primary:
+          type: boolean
+        notes:
+          type: string
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        email_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        billing_address:
+          $ref: '#/components/schemas/Location'
+    JobStatus:
+      type: string
+      description: Jobs move freely between statuses.
+      enum:
+      - unscheduled
+      - scheduled
+      - paused
+      - complete
+      - canceled
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of records to return. Maximum value is 100.
+      schema:
+        type: integer
+        maximum: 100
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http

@@ -115,7 +115,23 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   parameters:
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of records to return. Maximum value is 100.
+      schema:
+        type: integer
+        maximum: 100
     offset:
       name: offset
       in: query
@@ -129,22 +145,6 @@ components:
       required: true
       schema:
         type: integer
-    limit:
-      name: limit
-      in: query
-      description: Maximum number of records to return. Maximum value is 100.
-      schema:
-        type: integer
-        maximum: 100
-  responses:
-    NotFound:
-      description: Not Found - requested resource could not be found.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    UnprocessableEntity:
-      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
-    Forbidden:
-      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   schemas:
     Brand:
       type: object

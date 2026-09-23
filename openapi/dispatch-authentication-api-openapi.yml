@@ -55,6 +55,17 @@ paths:
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
 components:
+  responses:
+    BadRequest:
+      description: Bad Request - your request is malformed or otherwise invalid.
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    InternalServerError:
+      description: Internal Server Error - Dispatch had a problem. Try again later.
+    TooManyRequests:
+      description: Too Many Requests - you have exceeded your rate limit.
+    ServiceUnavailable:
+      description: Service Unavailable - temporarily offline for maintenance. Try again later.
   schemas:
     TokenResponse:
       type: object
@@ -123,17 +134,6 @@ components:
         client_secret:
           type: string
           description: Your secret key
-  responses:
-    ServiceUnavailable:
-      description: Service Unavailable - temporarily offline for maintenance. Try again later.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    InternalServerError:
-      description: Internal Server Error - Dispatch had a problem. Try again later.
-    TooManyRequests:
-      description: Too Many Requests - you have exceeded your rate limit.
-    BadRequest:
-      description: Bad Request - your request is malformed or otherwise invalid.
   securitySchemes:
     bearerAuth:
       type: http
