@@ -56,16 +56,16 @@ paths:
           $ref: '#/components/responses/ServiceUnavailable'
 components:
   responses:
-    BadRequest:
-      description: Bad Request - your request is malformed or otherwise invalid.
+    ServiceUnavailable:
+      description: Service Unavailable - temporarily offline for maintenance. Try again later.
     Unauthorized:
       description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    BadRequest:
+      description: Bad Request - your request is malformed or otherwise invalid.
     InternalServerError:
       description: Internal Server Error - Dispatch had a problem. Try again later.
     TooManyRequests:
       description: Too Many Requests - you have exceeded your rate limit.
-    ServiceUnavailable:
-      description: Service Unavailable - temporarily offline for maintenance. Try again later.
   schemas:
     TokenResponse:
       type: object
@@ -82,6 +82,17 @@ components:
         expires_in:
           type: integer
           description: Lifetime in seconds
+        refresh_token:
+          type: string
+    RefreshTokenGrant:
+      type: object
+      required:
+      - grant_type
+      - refresh_token
+      properties:
+        grant_type:
+          type: string
+          const: refresh_token
         refresh_token:
           type: string
     PasswordGrant:
@@ -105,17 +116,6 @@ components:
         client_id:
           type: string
         client_secret:
-          type: string
-    RefreshTokenGrant:
-      type: object
-      required:
-      - grant_type
-      - refresh_token
-      properties:
-        grant_type:
-          type: string
-          const: refresh_token
-        refresh_token:
           type: string
     ClientCredentialsGrant:
       type: object

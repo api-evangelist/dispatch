@@ -330,97 +330,15 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   responses:
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    UnprocessableEntity:
-      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
     NotFound:
       description: Not Found - requested resource could not be found.
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
     Forbidden:
       description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
   schemas:
-    AppointmentWindow:
-      type: object
-      properties:
-        start_time:
-          type: string
-          format: date-time
-        end_time:
-          type: string
-          format: date-time
-    Organization:
-      type: object
-      required:
-      - name
-      - email
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-        external_ids:
-          type: array
-          items:
-            type: string
-        address:
-          $ref: '#/components/schemas/Location'
-        phone_number:
-          type: string
-          description: RFC 3966 format
-        email:
-          type: string
-          format: email
-        logo_token:
-          type: string
-          description: Token for the organization logo in the Dispatch file system
-    ContactMethod:
-      type: object
-      properties:
-        label:
-          type: string
-          description: 'For example: mobile, work'
-        value:
-          type: string
-        preferred:
-          type: boolean
-    Customer:
-      type: object
-      required:
-      - organization_id
-      - first_name
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        organization_id:
-          type: integer
-          description: ID of the parent organization
-        first_name:
-          type: string
-        last_name:
-          type: string
-        company_name:
-          type: string
-        notes:
-          type: string
-        email:
-          type: string
-          format: email
-          description: Single email address per customer. Used for email notifications when configured.
-        phone_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/PhoneNumber'
-        home_address:
-          $ref: '#/components/schemas/Location'
-        billing_address:
-          $ref: '#/components/schemas/Location'
-        external_ids:
-          type: array
-          items:
-            type: string
-          description: Your ID(s) for this customer. Available to job sources only.
     Job:
       type: object
       required:
@@ -493,28 +411,79 @@ components:
         type:
           type: string
           description: 'For example: Mobile, Work'
-    Location:
+    ContactMethod:
       type: object
-      description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
-      required:
-      - street_1
-      - city
       properties:
-        street_1:
+        label:
           type: string
-        street_2:
+          description: 'For example: mobile, work'
+        value:
           type: string
-        city:
+        preferred:
+          type: boolean
+    Organization:
+      type: object
+      required:
+      - name
+      - email
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
           type: string
-        state:
+        external_ids:
+          type: array
+          items:
+            type: string
+        address:
+          $ref: '#/components/schemas/Location'
+        phone_number:
           type: string
-          description: Two-character state/province abbreviation
-        postal_code:
+          description: RFC 3966 format
+        email:
           type: string
-          description: 5-digit US or 6-character Canadian postal code
-        timezone:
+          format: email
+        logo_token:
           type: string
-          description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
+          description: Token for the organization logo in the Dispatch file system
+    Customer:
+      type: object
+      required:
+      - organization_id
+      - first_name
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        organization_id:
+          type: integer
+          description: ID of the parent organization
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company_name:
+          type: string
+        notes:
+          type: string
+        email:
+          type: string
+          format: email
+          description: Single email address per customer. Used for email notifications when configured.
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+        home_address:
+          $ref: '#/components/schemas/Location'
+        billing_address:
+          $ref: '#/components/schemas/Location'
+        external_ids:
+          type: array
+          items:
+            type: string
+          description: Your ID(s) for this customer. Available to job sources only.
     Contact:
       type: object
       properties:
@@ -543,6 +512,37 @@ components:
             $ref: '#/components/schemas/ContactMethod'
         billing_address:
           $ref: '#/components/schemas/Location'
+    AppointmentWindow:
+      type: object
+      properties:
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+    Location:
+      type: object
+      description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
+      required:
+      - street_1
+      - city
+      properties:
+        street_1:
+          type: string
+        street_2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+          description: Two-character state/province abbreviation
+        postal_code:
+          type: string
+          description: 5-digit US or 6-character Canadian postal code
+        timezone:
+          type: string
+          description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
     JobStatus:
       type: string
       description: Jobs move freely between statuses.
@@ -553,13 +553,12 @@ components:
       - complete
       - canceled
   parameters:
-    offset:
-      name: offset
-      in: query
-      description: Number of records to skip.
+    id:
+      name: id
+      in: path
+      required: true
       schema:
         type: integer
-        minimum: 0
     limit:
       name: limit
       in: query
@@ -567,12 +566,13 @@ components:
       schema:
         type: integer
         maximum: 100
-    id:
-      name: id
-      in: path
-      required: true
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
       schema:
         type: integer
+        minimum: 0
   securitySchemes:
     bearerAuth:
       type: http
