@@ -66,11 +66,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: Not Found - requested resource could not be found.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
   parameters:
     id:
       name: id
@@ -78,13 +73,6 @@ components:
       required: true
       schema:
         type: integer
-    offset:
-      name: offset
-      in: query
-      description: Number of records to skip.
-      schema:
-        type: integer
-        minimum: 0
     limit:
       name: limit
       in: query
@@ -92,6 +80,18 @@ components:
       schema:
         type: integer
         maximum: 100
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    NotFound:
+      description: Not Found - requested resource could not be found.
   schemas:
     Source:
       type: object

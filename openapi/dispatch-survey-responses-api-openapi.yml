@@ -69,9 +69,6 @@ components:
         message:
           type: string
           description: Additional feedback from the customer
-  responses:
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
   parameters:
     limit:
       name: limit
@@ -87,6 +84,9 @@ components:
       schema:
         type: integer
         minimum: 0
+  responses:
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
   securitySchemes:
     bearerAuth:
       type: http
