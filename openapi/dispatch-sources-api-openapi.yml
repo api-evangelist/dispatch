@@ -67,6 +67,13 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
     id:
       name: id
       in: path
@@ -80,18 +87,11 @@ components:
       schema:
         type: integer
         maximum: 100
-    offset:
-      name: offset
-      in: query
-      description: Number of records to skip.
-      schema:
-        type: integer
-        minimum: 0
   responses:
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
     NotFound:
       description: Not Found - requested resource could not be found.
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
   schemas:
     Source:
       type: object

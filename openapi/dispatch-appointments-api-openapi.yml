@@ -211,18 +211,17 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Forbidden:
-      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
-    InternalServerError:
-      description: Internal Server Error - Dispatch had a problem. Try again later.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    UnprocessableEntity:
-      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
-    NotFound:
-      description: Not Found - requested resource could not be found.
   schemas:
+    AppointmentStatus:
+      type: string
+      description: Appointments move freely between statuses. Technicians update status from the mobile app.
+      enum:
+      - draft
+      - scheduled
+      - enroute
+      - started
+      - complete
+      - canceled
     Appointment:
       type: object
       required:
@@ -247,17 +246,25 @@ components:
           description: ID of the assigned technician
         status:
           $ref: '#/components/schemas/AppointmentStatus'
-    AppointmentStatus:
-      type: string
-      description: Appointments move freely between statuses. Technicians update status from the mobile app.
-      enum:
-      - draft
-      - scheduled
-      - enroute
-      - started
-      - complete
-      - canceled
+  responses:
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+    InternalServerError:
+      description: Internal Server Error - Dispatch had a problem. Try again later.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   parameters:
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
     id:
       name: id
       in: path
@@ -271,13 +278,6 @@ components:
       schema:
         type: integer
         maximum: 100
-    offset:
-      name: offset
-      in: query
-      description: Number of records to skip.
-      schema:
-        type: integer
-        minimum: 0
   securitySchemes:
     bearerAuth:
       type: http

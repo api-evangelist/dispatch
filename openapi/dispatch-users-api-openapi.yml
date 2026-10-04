@@ -162,15 +162,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Forbidden:
-      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    UnprocessableEntity:
-      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
-    NotFound:
-      description: Not Found - requested resource could not be found.
   schemas:
     User:
       type: object
@@ -235,7 +226,23 @@ components:
         timezone:
           type: string
           description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
+  responses:
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   parameters:
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
     id:
       name: id
       in: path
@@ -249,13 +256,6 @@ components:
       schema:
         type: integer
         maximum: 100
-    offset:
-      name: offset
-      in: query
-      description: Number of records to skip.
-      schema:
-        type: integer
-        minimum: 0
   securitySchemes:
     bearerAuth:
       type: http

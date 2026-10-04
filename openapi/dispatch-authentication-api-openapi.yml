@@ -55,18 +55,35 @@ paths:
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
 components:
+  responses:
+    TooManyRequests:
+      description: Too Many Requests - you have exceeded your rate limit.
+    ServiceUnavailable:
+      description: Service Unavailable - temporarily offline for maintenance. Try again later.
+    InternalServerError:
+      description: Internal Server Error - Dispatch had a problem. Try again later.
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    BadRequest:
+      description: Bad Request - your request is malformed or otherwise invalid.
   schemas:
-    RefreshTokenGrant:
+    ClientCredentialsGrant:
       type: object
+      description: Job-source authentication.
       required:
       - grant_type
-      - refresh_token
+      - client_id
+      - client_secret
       properties:
         grant_type:
           type: string
-          const: refresh_token
-        refresh_token:
+          const: client_credentials
+        client_id:
           type: string
+          description: Your public key
+        client_secret:
+          type: string
+          description: Your secret key
     TokenResponse:
       type: object
       properties:
@@ -106,34 +123,17 @@ components:
           type: string
         client_secret:
           type: string
-    ClientCredentialsGrant:
+    RefreshTokenGrant:
       type: object
-      description: Job-source authentication.
       required:
       - grant_type
-      - client_id
-      - client_secret
+      - refresh_token
       properties:
         grant_type:
           type: string
-          const: client_credentials
-        client_id:
+          const: refresh_token
+        refresh_token:
           type: string
-          description: Your public key
-        client_secret:
-          type: string
-          description: Your secret key
-  responses:
-    ServiceUnavailable:
-      description: Service Unavailable - temporarily offline for maintenance. Try again later.
-    InternalServerError:
-      description: Internal Server Error - Dispatch had a problem. Try again later.
-    TooManyRequests:
-      description: Too Many Requests - you have exceeded your rate limit.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    BadRequest:
-      description: Bad Request - your request is malformed or otherwise invalid.
   securitySchemes:
     bearerAuth:
       type: http
