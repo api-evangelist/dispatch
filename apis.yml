@@ -72,7 +72,7 @@ x-namesakes:
     publishes no developer documentation.
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-20'
+modified: '2026-10-06'
 tags:
 - Field Service
 - Service Orchestration
@@ -347,6 +347,10 @@ apis:
   - type: Documentation
     url: https://github.com/DispatchMe/v3-api-docs/blob/master/source/index.html.md#files-photos
 common:
+- url: https://dispatch.me/resources/blog/
+  type: Blog
+- url: https://dispatch.me/feed/
+  type: BlogRSS
 - type: Overlay
   url: overlays/dispatch-files-v1-overlay.yaml
 - type: Website
