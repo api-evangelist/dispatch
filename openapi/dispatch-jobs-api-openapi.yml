@@ -330,6 +330,74 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   schemas:
+    JobStatus:
+      type: string
+      description: Jobs move freely between statuses.
+      enum:
+      - unscheduled
+      - scheduled
+      - paused
+      - complete
+      - canceled
+    ContactMethod:
+      type: object
+      properties:
+        label:
+          type: string
+          description: 'For example: mobile, work'
+        value:
+          type: string
+        preferred:
+          type: boolean
+    Customer:
+      type: object
+      required:
+      - organization_id
+      - first_name
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        organization_id:
+          type: integer
+          description: ID of the parent organization
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company_name:
+          type: string
+        notes:
+          type: string
+        email:
+          type: string
+          format: email
+          description: Single email address per customer. Used for email notifications when configured.
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+        home_address:
+          $ref: '#/components/schemas/Location'
+        billing_address:
+          $ref: '#/components/schemas/Location'
+        external_ids:
+          type: array
+          items:
+            type: string
+          description: Your ID(s) for this customer. Available to job sources only.
+    PhoneNumber:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Phone number in RFC 3966 format
+        primary:
+          type: boolean
+          description: Set true for the number that receives SMS notifications
+        type:
+          type: string
+          description: 'For example: Mobile, Work'
     Location:
       type: object
       description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
@@ -352,6 +420,32 @@ components:
         timezone:
           type: string
           description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
+    Organization:
+      type: object
+      required:
+      - name
+      - email
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        external_ids:
+          type: array
+          items:
+            type: string
+        address:
+          $ref: '#/components/schemas/Location'
+        phone_number:
+          type: string
+          description: RFC 3966 format
+        email:
+          type: string
+          format: email
+        logo_token:
+          type: string
+          description: Token for the organization logo in the Dispatch file system
     AppointmentWindow:
       type: object
       properties:
@@ -361,28 +455,6 @@ components:
         end_time:
           type: string
           format: date-time
-    ContactMethod:
-      type: object
-      properties:
-        label:
-          type: string
-          description: 'For example: mobile, work'
-        value:
-          type: string
-        preferred:
-          type: boolean
-    PhoneNumber:
-      type: object
-      properties:
-        number:
-          type: string
-          description: Phone number in RFC 3966 format
-        primary:
-          type: boolean
-          description: Set true for the number that receives SMS notifications
-        type:
-          type: string
-          description: 'For example: Mobile, Work'
     Contact:
       type: object
       properties:
@@ -411,15 +483,6 @@ components:
             $ref: '#/components/schemas/ContactMethod'
         billing_address:
           $ref: '#/components/schemas/Location'
-    JobStatus:
-      type: string
-      description: Jobs move freely between statuses.
-      enum:
-      - unscheduled
-      - scheduled
-      - paused
-      - complete
-      - canceled
     Job:
       type: object
       required:
@@ -480,86 +543,7 @@ components:
         status_message:
           type: string
           description: Optional qualifier for the current status
-    Customer:
-      type: object
-      required:
-      - organization_id
-      - first_name
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        organization_id:
-          type: integer
-          description: ID of the parent organization
-        first_name:
-          type: string
-        last_name:
-          type: string
-        company_name:
-          type: string
-        notes:
-          type: string
-        email:
-          type: string
-          format: email
-          description: Single email address per customer. Used for email notifications when configured.
-        phone_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/PhoneNumber'
-        home_address:
-          $ref: '#/components/schemas/Location'
-        billing_address:
-          $ref: '#/components/schemas/Location'
-        external_ids:
-          type: array
-          items:
-            type: string
-          description: Your ID(s) for this customer. Available to job sources only.
-    Organization:
-      type: object
-      required:
-      - name
-      - email
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-        external_ids:
-          type: array
-          items:
-            type: string
-        address:
-          $ref: '#/components/schemas/Location'
-        phone_number:
-          type: string
-          description: RFC 3966 format
-        email:
-          type: string
-          format: email
-        logo_token:
-          type: string
-          description: Token for the organization logo in the Dispatch file system
-  responses:
-    UnprocessableEntity:
-      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
-    NotFound:
-      description: Not Found - requested resource could not be found.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    Forbidden:
-      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   parameters:
-    offset:
-      name: offset
-      in: query
-      description: Number of records to skip.
-      schema:
-        type: integer
-        minimum: 0
     id:
       name: id
       in: path
@@ -573,6 +557,22 @@ components:
       schema:
         type: integer
         maximum: 100
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
+  responses:
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   securitySchemes:
     bearerAuth:
       type: http

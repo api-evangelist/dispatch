@@ -115,23 +115,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    UnprocessableEntity:
-      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
-    NotFound:
-      description: Not Found - requested resource could not be found.
-    Unauthorized:
-      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
-    Forbidden:
-      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   parameters:
-    offset:
-      name: offset
-      in: query
-      description: Number of records to skip.
-      schema:
-        type: integer
-        minimum: 0
     id:
       name: id
       in: path
@@ -145,6 +129,13 @@ components:
       schema:
         type: integer
         maximum: 100
+    offset:
+      name: offset
+      in: query
+      description: Number of records to skip.
+      schema:
+        type: integer
+        minimum: 0
   schemas:
     Brand:
       type: object
@@ -162,6 +153,15 @@ components:
         email:
           type: string
           format: email
+  responses:
+    NotFound:
+      description: Not Found - requested resource could not be found.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
+    Unauthorized:
+      description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
+    Forbidden:
+      description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
   securitySchemes:
     bearerAuth:
       type: http

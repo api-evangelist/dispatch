@@ -82,7 +82,24 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
   schemas:
+    ContactMethod:
+      type: object
+      properties:
+        label:
+          type: string
+          description: 'For example: mobile, work'
+        value:
+          type: string
+        preferred:
+          type: boolean
     Location:
       type: object
       description: Locations are not business objects, but attributes on several core objects. Dispatch currently supports locations in the US and Canada only.
@@ -105,59 +122,6 @@ components:
         timezone:
           type: string
           description: IANA timezone. If not provided Dispatch attempts to derive it from the postal code.
-    ContactMethod:
-      type: object
-      properties:
-        label:
-          type: string
-          description: 'For example: mobile, work'
-        value:
-          type: string
-        preferred:
-          type: boolean
-    OrchestrationAlgorithm:
-      type: string
-      description: direct_offer offers the job to a single organization (job starts in offered status); direct_assign assigns the job to a single organization (job starts in unscheduled status).
-      enum:
-      - direct_offer
-      - direct_assign
-    Contact:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        first_name:
-          type: string
-        last_name:
-          type: string
-        company_name:
-          type: string
-        external_id:
-          type: string
-        primary:
-          type: boolean
-        notes:
-          type: string
-        phone_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactMethod'
-        email_addresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactMethod'
-        billing_address:
-          $ref: '#/components/schemas/Location'
-    AppointmentWindow:
-      type: object
-      properties:
-        start_time:
-          type: string
-          format: date-time
-        end_time:
-          type: string
-          format: date-time
     Organization:
       type: object
       required:
@@ -184,6 +148,15 @@ components:
         logo_token:
           type: string
           description: Token for the organization logo in the Dispatch file system
+    AppointmentWindow:
+      type: object
+      properties:
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
     WorkOrder:
       type: object
       description: The recommended integration surface - carries everything needed to create a job, its customer, its organization and appointment windows in one request.
@@ -220,22 +193,49 @@ components:
           description: Organizations to send or offer the work to. In direct_* orchestration only a single organization is permitted.
           items:
             $ref: '#/components/schemas/Organization'
+    OrchestrationAlgorithm:
+      type: string
+      description: direct_offer offers the job to a single organization (job starts in offered status); direct_assign assigns the job to a single organization (job starts in unscheduled status).
+      enum:
+      - direct_offer
+      - direct_assign
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+        last_name:
+          type: string
+        company_name:
+          type: string
+        external_id:
+          type: string
+        primary:
+          type: boolean
+        notes:
+          type: string
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        email_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMethod'
+        billing_address:
+          $ref: '#/components/schemas/Location'
   responses:
-    UnprocessableEntity:
-      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
     NotFound:
       description: Not Found - requested resource could not be found.
+    UnprocessableEntity:
+      description: Unprocessable Entity - your request payload did not pass validation rules. See the response body for details.
     Unauthorized:
       description: Unauthorized - your OAuth2 bearer token is incorrect or expired.
     Forbidden:
       description: Forbidden - your credentials are correct, but you are not allowed to perform this action.
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: integer
   securitySchemes:
     bearerAuth:
       type: http
